@@ -1,5 +1,7 @@
-// axios
-import axios, { AxiosResponse, AxiosError, AxiosRequestConfig } from 'axios';
+// npm
+import axios, { AxiosResponse, AxiosError } from 'axios';
+
+// models
 import { Request } from '../api/models';
 
 export const axiosHook = () => {
