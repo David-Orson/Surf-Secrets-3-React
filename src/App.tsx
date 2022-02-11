@@ -2,9 +2,6 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 
-// css
-import './app.css';
-
 // components
 import Navbar from './components/Navbar';
 
@@ -17,7 +14,6 @@ import MatchFinder from './views/MatchFinder';
 const App = () => {
     return (
         <div className="App">
-            aaa
             <Router>
                 <Navbar />
                 <div className="router-view">

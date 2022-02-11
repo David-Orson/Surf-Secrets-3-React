@@ -1,19 +1,37 @@
 // npm
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 
 // mui
 import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
 import Button from '@mui/material/Button';
+import Modal from '@mui/material/Modal';
+import Box from '@mui/material/Box';
+
+// components
+import Login from './Login';
+import Signup from './Signup';
 
 const Navbar = () => {
+    const [isLoginVisible, setIsLoginVisible] = useState(false);
+    const [isSignupVisible, setIsSignupVisible] = useState(false);
     return (
         <div>
             <AppBar>
                 <Toolbar>
-                    <Button color="inherit">Login</Button>
-                    <Button color="inherit">Signup</Button>
+                    <Button
+                        color="inherit"
+                        onClick={() => setIsLoginVisible(true)}
+                    >
+                        Login
+                    </Button>
+                    <Button
+                        color="inherit"
+                        onClick={() => setIsSignupVisible(true)}
+                    >
+                        Signup
+                    </Button>
                     <Button color="inherit" component={Link} to="/profile">
                         Profile
                     </Button>
@@ -25,6 +43,28 @@ const Navbar = () => {
                     </Button>
                 </Toolbar>
             </AppBar>
+            <Modal
+                open={isLoginVisible}
+                onClose={() => setIsLoginVisible(false)}
+            >
+                <Box
+                    className="absolute bg-slate-50 w-1/3 margin-auto top-1/2 left-1/2 p-4"
+                    sx={{ transform: 'translate(-50%, -50%)' }}
+                >
+                    <Login />
+                </Box>
+            </Modal>
+            <Modal
+                open={isSignupVisible}
+                onClose={() => setIsSignupVisible(false)}
+            >
+                <Box
+                    className="absolute bg-slate-50 w-1/3 margin-auto top-1/2 left-1/2 p-4"
+                    sx={{ transform: 'translate(-50%, -50%)' }}
+                >
+                    <Signup />
+                </Box>
+            </Modal>
         </div>
     );
 };
