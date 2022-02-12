@@ -1,4 +1,4 @@
-import { AxiosRequestConfig } from 'axios';
+import { AxiosRequestConfig, AxiosResponse } from 'axios';
 
 export interface Request {
     axiosRequestConfig: AxiosRequestConfig;
@@ -6,3 +6,5 @@ export interface Request {
     status: number;
     complete: boolean;
 }
+
+export type AxiosRequest = <T = any, R = AxiosResponse<T, any>, D = any>(url: string, config?: AxiosRequestConfig<D> | undefined) => Promise<R>
