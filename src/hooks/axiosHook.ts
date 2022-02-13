@@ -74,7 +74,7 @@ export const useAxios = () => {
 
     const wrapRequest =
         (reqMethod: AxiosRequest) =>
-        (url: string, auth?: boolean, delay?: number): any => {
+        (url: string, body?: {}, auth?: boolean, delay?: number): any => {
             const { request, err } = prepareRequest(auth);
 
             if (err !== null) {
@@ -83,7 +83,7 @@ export const useAxios = () => {
 
             setDelayWarning(delay);
 
-            return reqMethod(url, request.axiosRequestConfig).catch(
+            return reqMethod(url, body, request.axiosRequestConfig).catch(
                 (err: AxiosError) => {
                     handleError(err, request?.id);
                 }

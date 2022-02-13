@@ -16,5 +16,6 @@ export interface Network {
 
 export type AxiosRequest = <T = any, R = AxiosResponse<T, any>, D = any>(
     url: string,
+    body?: any,
     config?: AxiosRequestConfig<D> | undefined
 ) => Promise<R>;
