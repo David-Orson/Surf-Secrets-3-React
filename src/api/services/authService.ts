@@ -20,12 +20,7 @@ export const useAuthService = () => {
     const apiUrl = useSelector((state: RootState) => state.network.apiUrl);
 
     const getToken = async (loginCreds: LoginCreds) => {
-        const res = await axios.post(
-            `${apiUrl}/auth/login`,
-            loginCreds,
-            false,
-            5000
-        );
+        const res = await axios.post(`${apiUrl}/auth/login`, loginCreds, false);
         return res.data;
     };
 
