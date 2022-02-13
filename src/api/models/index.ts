@@ -1,1 +1,3 @@
-export type { Request } from './networking';
+export type { Account } from './accountModel';
+export type { LoginCreds, SignupCreds } from './authModels';
+export type { Request, Network } from './networking';

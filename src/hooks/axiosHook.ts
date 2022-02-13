@@ -1,10 +1,10 @@
 // npm
-import axios, { AxiosResponse, AxiosError } from 'axios';
+import axios, { AxiosError, AxiosRequestHeaders } from 'axios';
 
 // models
 import { Request } from '../api/models';
 
-export const axiosHook = () => {
+export const useAxios = () => {
     const store: any = {};
     const requests: any[] = [];
 
@@ -51,6 +51,7 @@ export const axiosHook = () => {
             id: requests.length,
             status: 601,
             complete: false,
+            data: {},
         };
 
         requests.push(request);
@@ -73,11 +74,7 @@ export const axiosHook = () => {
         }
     };
 
-    const get = (
-        url: string,
-        auth?: boolean,
-        delay?: number
-    ): Promise<void | AxiosResponse<any>> | null => {
+    const get = (url: string, auth?: boolean, delay?: number): any => {
         let { request, err } = prepareRequest(auth);
 
         if (err !== null) {
@@ -95,7 +92,12 @@ export const axiosHook = () => {
         return axiosInstance;
     };
 
-    const post = (url: string, auth: boolean = true, delay?: number) => {
+    const post = (
+        url: string,
+        body: {},
+        auth: boolean = true,
+        delay?: number
+    ): any => {
         let { request, err } = prepareRequest(auth);
 
         if (err !== null) {
@@ -104,8 +106,19 @@ export const axiosHook = () => {
 
         setDelayWarning(delay);
 
+        request.data = body;
+
+        const authToken = store?.state?.authToken;
+
         const axiosInstance = axios
-            .post(url, request.axiosRequestConfig)
+            .post(url, body, {
+                cancelToken: store?.state?.cancelToken?.token,
+                headers: {
+                    Authorization: authToken
+                        ? 'Bearer ' + JSON.parse(authToken).token
+                        : null,
+                } as AxiosRequestHeaders,
+            })
             .catch((err: AxiosError) => {
                 handleError(err, request?.id);
             });
@@ -113,7 +126,12 @@ export const axiosHook = () => {
         return axiosInstance;
     };
 
-    const put = (url: string, auth: boolean = true, delay?: number) => {
+    const put = (
+        url: string,
+        body: {},
+        auth: boolean = true,
+        delay?: number
+    ): any => {
         let { request, err } = prepareRequest(auth);
 
         if (err !== null) {
@@ -121,6 +139,8 @@ export const axiosHook = () => {
         }
 
         setDelayWarning(delay);
+
+        request.data = body;
 
         const axiosInstance = axios
             .put(url, request.axiosRequestConfig)
@@ -131,7 +151,11 @@ export const axiosHook = () => {
         return axiosInstance;
     };
 
-    const deleteId = (url: string, auth: boolean = true, delay?: number) => {
+    const deleteId = (
+        url: string,
+        auth: boolean = true,
+        delay?: number
+    ): any => {
         let { request, err } = prepareRequest(auth);
 
         if (err !== null) {

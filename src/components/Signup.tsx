@@ -6,7 +6,15 @@ import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 
+// models
+import { SignupCreds } from '../api/models';
+
+// services
+import { useServices } from '../api/services';
+
 const Signup = () => {
+    const { signUp } = useServices();
+
     // reactive
     const [username, setUsername] = useState('');
     const [email, setEmail] = useState('');
@@ -16,7 +24,19 @@ const Signup = () => {
     // methods
     const submit = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        console.log('submit');
+
+        if (password !== confirmPassword) {
+            console.log('passwords do not match');
+            return;
+        }
+
+        const signupCreds = {} as SignupCreds;
+
+        signupCreds.username = username;
+        signupCreds.email = email;
+        signupCreds.password = password;
+
+        signUp(signupCreds);
     };
 
     return (
