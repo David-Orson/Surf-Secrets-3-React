@@ -33,6 +33,7 @@ const Signup = (props: Props) => {
 
         if (password !== confirmPassword) {
             console.log('passwords do not match');
+            setIsLoading(false);
             return;
         }
 

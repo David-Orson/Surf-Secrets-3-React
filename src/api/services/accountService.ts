@@ -15,22 +15,22 @@ export const useAccountService = () => {
     // properties
     const apiUrl = useSelector((state: RootState) => state.network.apiUrl);
 
-    const getAccount = async (id: number) => {
+    const getAccount = async (id: number): Promise<Account> => {
         const res = await axios.get(`${apiUrl}/account/${id}`);
         return res.data;
     };
 
-    const getAllAccount = async () => {
-        const res = await axios.get(`${apiUrl}/account`);
+    const getAllAccount = async (): Promise<Account[]> => {
+        const res = await axios.get(`${apiUrl}/accounts`);
         return res.data;
     };
 
-    const createAccount = async (account: Account) => {
+    const createAccount = async (account: Account): Promise<Account> => {
         const res = await axios.post(`${apiUrl}/account`, account);
         return res.data;
     };
 
-    const updateAccount = async (account: Account) => {
+    const updateAccount = async (account: Account): Promise<Account> => {
         const res = await axios.put(`${apiUrl}/account`, account);
         return res.data;
     };

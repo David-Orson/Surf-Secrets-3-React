@@ -1,9 +1,11 @@
 import { SET_AUTH, REMOVE_AUTH } from '../types';
 
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { RootState } from '../store';
 
 export const useNetworkActions = () => {
     const dispatch = useDispatch();
+    const account = useSelector((state: RootState) => state.account);
 
     const setAuthToken = (authToken: any) => {
         localStorage.setItem('authToken', authToken.token);
@@ -20,8 +22,11 @@ export const useNetworkActions = () => {
         });
     };
 
+    const isAuthenticated = () => !!account;
+
     return {
         setAuthToken,
         removeAuthToken,
+        isAuthenticated,
     };
 };

@@ -18,12 +18,16 @@ export interface InitialState {
 }
 
 const initialState: InitialState = {
-    account: {} as Account,
+    account: JSON.parse(localStorage.getItem('account') as string) as Account,
     network: {
         apiUrl: 'http://localhost:8085',
-        auth: { token: '' },
+        auth: {
+            token: localStorage.getItem('authToken'),
+        },
     } as Network,
 };
+
+console.log(!!initialState.account, initialState.account);
 
 const middleware = [thunk];
 

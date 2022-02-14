@@ -9,35 +9,59 @@ import Button from '@mui/material/Button';
 import Modal from '@mui/material/Modal';
 import Box from '@mui/material/Box';
 
+// hooks
+import { useActions } from '../redux/actions';
+
 // components
 import Login from './Login';
 import Signup from './Signup';
 
 const Navbar = () => {
+    // hooks
+    const { isAuthenticated } = useActions();
+
+    // reactive
     const [isLoginVisible, setIsLoginVisible] = useState(false);
     const [isSignupVisible, setIsSignupVisible] = useState(false);
+
     return (
         <div>
             <AppBar>
                 <Toolbar>
-                    <Button
-                        color="inherit"
-                        onClick={() => setIsLoginVisible(true)}
-                    >
-                        Login
-                    </Button>
-                    <Button
-                        color="inherit"
-                        onClick={() => setIsSignupVisible(true)}
-                    >
-                        Signup
-                    </Button>
-                    <Button color="inherit" component={Link} to="/profile">
-                        Profile
-                    </Button>
-                    <Button color="inherit" component={Link} to="/match-finder">
-                        Match Finder
-                    </Button>
+                    {!isAuthenticated() ? (
+                        <div>
+                            <Button
+                                color="inherit"
+                                onClick={() => setIsLoginVisible(true)}
+                            >
+                                Login
+                            </Button>
+                            <Button
+                                color="inherit"
+                                onClick={() => setIsSignupVisible(true)}
+                            >
+                                Signup
+                            </Button>
+                        </div>
+                    ) : (
+                        <div>
+                            <Button
+                                color="inherit"
+                                component={Link}
+                                to="/profile"
+                            >
+                                Profile
+                            </Button>
+                            <Button
+                                color="inherit"
+                                component={Link}
+                                to="/match-finder"
+                            >
+                                Match Finder
+                            </Button>
+                        </div>
+                    )}
+
                     <Button color="inherit" component={Link} to="/">
                         Home
                     </Button>
