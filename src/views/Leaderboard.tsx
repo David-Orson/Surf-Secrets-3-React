@@ -14,15 +14,15 @@ import Paper from '@mui/material/Paper';
 // hooks
 import { useServices } from '../api/services';
 
-function createData(
+const createData = (
     name: string,
     games: number,
     wins: number,
     losses: number,
     disputes: number
-) {
+) => {
     return { name, games, wins, losses, disputes };
-}
+};
 
 const Leaderboard = () => {
     // hooks
@@ -106,7 +106,13 @@ const Leaderboard = () => {
                                         },
                                     }}
                                 >
-                                    <TableCell component="th" scope="row">
+                                    <TableCell
+                                        component="th"
+                                        scope="row"
+                                        onClick={() => {
+                                            console.log(row.name);
+                                        }}
+                                    >
                                         {row.name}
                                     </TableCell>
                                     <TableCell align="right">

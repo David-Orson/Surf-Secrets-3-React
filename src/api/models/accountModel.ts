@@ -6,4 +6,5 @@ export interface Account {
     loss: number;
     disputes: number;
     steamId: number;
+    createDate: Date;
 }

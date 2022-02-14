@@ -26,6 +26,10 @@ const App = () => {
                     <Routes>
                         <Route path="/" element={<Leaderboard />} />
                         <Route path="/profile" element={<Profile />} />
+                        <Route
+                            path="/profile/:username"
+                            element={<Profile />}
+                        />
                         <Route path="/match" element={<Match />} />
                         <Route path="/match-finder" element={<MatchFinder />} />
                     </Routes>

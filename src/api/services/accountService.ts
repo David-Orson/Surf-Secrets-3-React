@@ -15,8 +15,8 @@ export const useAccountService = () => {
     // properties
     const apiUrl = useSelector((state: RootState) => state.network.apiUrl);
 
-    const getAccount = async (id: number): Promise<Account> => {
-        const res = await axios.get(`${apiUrl}/account/${id}`);
+    const getAccount = async (username: string): Promise<Account> => {
+        const res = await axios.get(`${apiUrl}/account/${username}`);
         return res.data;
     };
 
