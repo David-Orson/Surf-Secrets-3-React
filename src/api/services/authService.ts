@@ -28,6 +28,9 @@ export const useAuthService = () => {
         const token = (await getToken(loginCreds)) as any;
 
         const account = await getAccount(token.accountId);
+
+        setAccount(account);
+        setAuthToken(token);
     };
 
     const signUp = async (signupCreds: SignupCreds) => {

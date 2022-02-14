@@ -51,7 +51,7 @@ const Navbar = () => {
                     className="absolute bg-slate-50 w-1/3 margin-auto top-1/2 left-1/2 p-4"
                     sx={{ transform: 'translate(-50%, -50%)' }}
                 >
-                    <Login />
+                    <Login setIsLoginVisible={setIsLoginVisible} />
                 </Box>
             </Modal>
             <Modal
@@ -62,7 +62,7 @@ const Navbar = () => {
                     className="absolute bg-slate-50 w-1/3 margin-auto top-1/2 left-1/2 p-4"
                     sx={{ transform: 'translate(-50%, -50%)' }}
                 >
-                    <Signup />
+                    <Signup setIsSignupVisible={setIsSignupVisible} />
                 </Box>
             </Modal>
         </div>

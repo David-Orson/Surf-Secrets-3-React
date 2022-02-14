@@ -4,17 +4,42 @@ import React, { useState, FormEvent } from 'react';
 // mui
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
-import Button from '@mui/material/Button';
+import LoadingButton from '@mui/lab/LoadingButton';
 
-const Login = () => {
+// hooks
+import { useServices } from '../api/services';
+
+// models
+import { LoginCreds } from '../api/models';
+
+// local types
+interface Props {
+    setIsLoginVisible: Function;
+}
+
+const Login = (props: Props) => {
+    // hooks
+    const { logIn } = useServices();
+
     // reactive
+    const [isLoading, setIsLoading] = useState(false);
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
 
     // methods
-    const submit = (e: FormEvent<HTMLFormElement>) => {
+    const submit = async (e: FormEvent<HTMLFormElement>) => {
+        setIsLoading(true);
         e.preventDefault();
-        console.log('submit');
+
+        const loginCreds = {} as LoginCreds;
+
+        loginCreds.email = email;
+        loginCreds.password = password;
+
+        await logIn(loginCreds);
+
+        setIsLoading(false);
+        props.setIsLoginVisible(false);
     };
 
     return (
@@ -51,9 +76,14 @@ const Login = () => {
                     }}
                     margin="normal"
                 />
-                <Button type="submit" variant="contained" color="primary">
+                <LoadingButton
+                    type="submit"
+                    variant="contained"
+                    color="primary"
+                    loading={isLoading}
+                >
                     Login
-                </Button>
+                </LoadingButton>
             </form>
         </div>
     );

@@ -4,7 +4,7 @@ import React, { useState, FormEvent } from 'react';
 // mui
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
-import Button from '@mui/material/Button';
+import LoadingButton from '@mui/lab/LoadingButton';
 
 // models
 import { SignupCreds } from '../api/models';
@@ -12,17 +12,23 @@ import { SignupCreds } from '../api/models';
 // services
 import { useServices } from '../api/services';
 
-const Signup = () => {
+interface Props {
+    setIsSignupVisible: Function;
+}
+
+const Signup = (props: Props) => {
     const { signUp } = useServices();
 
     // reactive
+    const [isLoading, setIsLoading] = useState(false);
     const [username, setUsername] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
 
     // methods
-    const submit = (e: FormEvent<HTMLFormElement>) => {
+    const submit = async (e: FormEvent<HTMLFormElement>) => {
+        setIsLoading(true);
         e.preventDefault();
 
         if (password !== confirmPassword) {
@@ -36,7 +42,10 @@ const Signup = () => {
         signupCreds.email = email;
         signupCreds.password = password;
 
-        signUp(signupCreds);
+        await signUp(signupCreds);
+
+        setIsLoading(false);
+        props.setIsSignupVisible(false);
     };
 
     return (
@@ -97,9 +106,14 @@ const Signup = () => {
                     }}
                     margin="normal"
                 />
-                <Button type="submit" variant="contained" color="primary">
+                <LoadingButton
+                    type="submit"
+                    variant="contained"
+                    color="primary"
+                    loading={isLoading}
+                >
                     Signup
-                </Button>
+                </LoadingButton>
             </form>
         </div>
     );
