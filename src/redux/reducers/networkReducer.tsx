@@ -15,7 +15,7 @@ const authReducer: any = (state = initialState, action: any) => {
             return {
                 ...state,
                 auth: {
-                    ...action.payload,
+                    token: action.payload,
                 },
             };
 
