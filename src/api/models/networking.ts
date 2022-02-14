@@ -1,4 +1,4 @@
-import { AuthState } from './authModels';
+import { AuthState } from './auth';
 import { AxiosRequestConfig, AxiosResponse } from 'axios';
 
 export interface Request {

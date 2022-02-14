@@ -14,6 +14,9 @@ import Paper from '@mui/material/Paper';
 // hooks
 import { useServices } from '../api/services';
 
+// models
+import { Account } from '../api/models';
+
 const createData = (
     name: string,
     games: number,
@@ -44,10 +47,11 @@ const Leaderboard = () => {
     useEffect(() => {
         let rowData: any[] = [];
         let cancelled = false;
-        let accounts;
+        let accounts: Account[];
 
         const request = async () => {
             accounts = await getAllAccount();
+            if (cancelled) return;
 
             accounts.forEach((account) => {
                 rowData.push(
@@ -60,8 +64,6 @@ const Leaderboard = () => {
                     )
                 );
             });
-
-            if (cancelled) return;
 
             setRows(rowData.sort((a, b) => b.wins - a.wins));
         };

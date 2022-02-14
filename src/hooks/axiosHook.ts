@@ -1,11 +1,15 @@
 // npm
 import axios, { AxiosError, AxiosRequestHeaders, AxiosResponse } from 'axios';
+import { useSelector } from 'react-redux';
 
 // models
 import { Request, AxiosRequest } from '../api/models';
+import { RootState } from '../redux/store';
 
 export const useAxios = () => {
-    const store: any = {};
+    const authToken = useSelector(
+        (state: RootState) => state.network.auth.token
+    );
     const requests: any[] = [];
 
     const prepareRequest = (
@@ -15,7 +19,6 @@ export const useAxios = () => {
         let request = {} as Request;
 
         if (auth) {
-            const authToken = store?.state?.authToken;
             if (!authToken) {
                 request.id = requests.length;
                 request.status = 600;
@@ -42,7 +45,7 @@ export const useAxios = () => {
             }
 
             headers = {
-                Authorization: 'Bearer ' + JSON.parse(authToken).token,
+                Authorization: 'Bearer ' + authToken,
             };
         }
 
@@ -83,6 +86,7 @@ export const useAxios = () => {
 
             setDelayWarning(delay);
 
+            console.log('config', request.axiosRequestConfig);
             return reqMethod(url, body, request.axiosRequestConfig).catch(
                 (err: AxiosError) => {
                     handleError(err, request?.id);

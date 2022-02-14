@@ -1,9 +1,13 @@
-import { useAccountService } from './accountService';
-import { useAuthService } from './authService';
+import { useAccountService } from './account';
+import { useAuthService } from './auth';
+import { useFinderService } from './finder';
+import { useMapService } from './map';
 
 export const useServices = () => {
     return {
         ...useAccountService(),
         ...useAuthService(),
+        ...useFinderService(),
+        ...useMapService(),
     };
 };

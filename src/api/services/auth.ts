@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux';
 
 // hooks
 import { useAxios } from '../../hooks/axiosHook';
-import { useAccountService } from './accountService';
+import { useAccountService } from './account';
 import { useActions } from '../../redux/actions';
 
 // models
