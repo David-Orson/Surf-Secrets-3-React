@@ -34,8 +34,11 @@ export const useMatchService = () => {
         return res.data;
     };
 
-    const reportMatch = async (id: number) => {
-        const res = await axios.put(`${apiUrl}/match/${id}`);
+    const reportMatch = async (
+        id: number,
+        score: number[]
+    ): Promise<number> => {
+        const res = await axios.put(`${apiUrl}/match/${id}`, { score }, true);
         return res.data;
     };
 

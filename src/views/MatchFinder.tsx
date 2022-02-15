@@ -1,6 +1,7 @@
 // npm
 import React, { useEffect, useState } from 'react';
 import dayjs from 'dayjs';
+import { useNavigate } from 'react-router-dom';
 
 // mui
 import Button from '@mui/material/Button';
@@ -33,6 +34,7 @@ const createData = (id: number, maps: string, games: number, t: Date) => {
 const MatchFinder = () => {
     // hooks
     const { getAllFinderPosts, acceptMatch } = useServices();
+    const navigate = useNavigate();
 
     // reactive
     const [page, setPage] = useState(0);
@@ -55,10 +57,12 @@ const MatchFinder = () => {
     const accept = async () => {
         setIsConfirmLoading(true);
 
-        await acceptMatch(finderPost.id);
+        const match = await acceptMatch(finderPost.id);
 
         setIsConfirmLoading(false);
         setIsConfirmVisible(false);
+
+        navigate(`/match/${match.id}`);
     };
 
     // lifecycle
@@ -130,13 +134,7 @@ const MatchFinder = () => {
                                         },
                                     }}
                                 >
-                                    <TableCell
-                                        component="th"
-                                        scope="row"
-                                        onClick={() => {
-                                            console.log(row.name);
-                                        }}
-                                    >
+                                    <TableCell component="th" scope="row">
                                         {row.maps}
                                     </TableCell>
                                     <TableCell align="right">

@@ -5,7 +5,6 @@ import { useSelector } from 'react-redux';
 import DateAdapter from '@mui/lab/AdapterDayjs';
 
 // mui
-import AdapterDateFns from '@mui/lab/AdapterDateFns';
 import LocalizationProvider from '@mui/lab/LocalizationProvider';
 
 import Typography from '@mui/material/Typography';
