@@ -20,8 +20,13 @@ export const useMatchService = () => {
         return res.data;
     };
 
-    const getAllMatchs = async (): Promise<Match[]> => {
+    const getAllMatches = async (): Promise<Match[]> => {
         const res = await axios.get(`${apiUrl}/matches`, {}, true);
+        return res.data;
+    };
+
+    const getMatchesByAccount = async (accountId: number): Promise<Match[]> => {
+        const res = await axios.get(`${apiUrl}/matches/user/${accountId}`);
         return res.data;
     };
 
@@ -44,7 +49,8 @@ export const useMatchService = () => {
 
     return {
         getMatch,
-        getAllMatchs,
+        getAllMatches,
+        getMatchesByAccount,
         acceptMatch,
         reportMatch,
     };
