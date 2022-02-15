@@ -1,5 +1,5 @@
 // npm
-import axios, { AxiosError, AxiosRequestHeaders, AxiosResponse } from 'axios';
+import axios, { AxiosError } from 'axios';
 import { useSelector } from 'react-redux';
 
 // models
@@ -64,14 +64,14 @@ export const useAxios = () => {
 
     const handleError = (err: AxiosError, requestId: number) => {
         requests.find((x) => x.id === requestId).complete = true;
-        console.error(err);
+        window.console.error(err);
     };
 
     const setDelayWarning = (delay?: number) => {
         if (!delay) return;
 
         setTimeout(() => {
-            console.warn('request is taking longer than expected');
+            window.console.warn('request is taking longer than expected');
         }, delay);
     };
 

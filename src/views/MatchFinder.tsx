@@ -23,21 +23,26 @@ import { FinderPost } from '../api/models';
 
 // componenets
 import FinderPostCreator from '../components/FinderPostCreator';
+import Confirm from '../components/Confirm';
 
-const createData = (maps: string, games: number, t: Date) => {
-    const time = dayjs(t).format('hh mm A');
-    console.log(time);
-    return { maps, games, time };
+const createData = (id: number, maps: string, games: number, t: Date) => {
+    const time = dayjs(t).format('hh:mm A');
+    return { id, maps, games, time };
 };
 
 const MatchFinder = () => {
     // hooks
-    const { getAllFinderPosts } = useServices();
+    const { getAllFinderPosts, acceptMatch } = useServices();
 
     // reactive
     const [page, setPage] = useState(0);
     const [rows, setRows] = useState<any[]>([]);
     const [isCreateVisible, setIsCreateVisible] = useState(false);
+    const [isConfirmVisible, setIsConfirmVisible] = useState(false);
+    const [isConfirmLoading, setIsConfirmLoading] = useState(false);
+    const [finderPost, setFinderPost] = useState<FinderPost>({
+        id: 0,
+    } as FinderPost);
 
     // props
     const rowsPerPage = 10;
@@ -45,6 +50,15 @@ const MatchFinder = () => {
     // methods
     const changePage = (event: unknown, newPage: number) => {
         setPage(newPage);
+    };
+
+    const accept = async () => {
+        setIsConfirmLoading(true);
+
+        await acceptMatch(finderPost.id);
+
+        setIsConfirmLoading(false);
+        setIsConfirmVisible(false);
     };
 
     // lifecycle
@@ -59,7 +73,12 @@ const MatchFinder = () => {
 
             posts?.forEach((post) => {
                 rowData.push(
-                    createData(post.maps[0].name, post.maps.length, post.time)
+                    createData(
+                        post.id,
+                        post.maps[0].name,
+                        post.maps.length,
+                        post.time
+                    )
                 );
             });
 
@@ -79,7 +98,7 @@ const MatchFinder = () => {
                 variant={'contained'}
                 onClick={() => setIsCreateVisible(true)}
             >
-                Create Post
+                Create Match
             </Button>
             <TableContainer component={Paper}>
                 <Table
@@ -92,6 +111,7 @@ const MatchFinder = () => {
                             <TableCell>Maps</TableCell>
                             <TableCell align="right">Games</TableCell>
                             <TableCell align="right">Time</TableCell>
+                            <TableCell align="right"></TableCell>
                         </TableRow>
                     </TableHead>
                     <TableBody>
@@ -100,10 +120,10 @@ const MatchFinder = () => {
                                 i > (page + 1) * rowsPerPage - 1 ||
                                 i < page * rowsPerPage
                             )
-                                return;
+                                return null;
                             return (
                                 <TableRow
-                                    key={row.name}
+                                    key={row.id}
                                     sx={{
                                         '&:last-child td, &:last-child th': {
                                             border: 0,
@@ -124,6 +144,17 @@ const MatchFinder = () => {
                                     </TableCell>
                                     <TableCell align="right">
                                         {row.time}
+                                    </TableCell>
+                                    <TableCell align="right">
+                                        <Button
+                                            variant="contained"
+                                            onClick={async () => {
+                                                await setFinderPost(row);
+                                                setIsConfirmVisible(true);
+                                            }}
+                                        >
+                                            /
+                                        </Button>
                                     </TableCell>
                                 </TableRow>
                             );
@@ -150,6 +181,28 @@ const MatchFinder = () => {
                     <FinderPostCreator
                         setIsCreateVisible={setIsCreateVisible}
                     />
+                </Box>
+            </Modal>
+
+            <Modal
+                open={isConfirmVisible}
+                onClose={() => setIsConfirmVisible(false)}
+            >
+                <Box
+                    className="absolute bg-slate-50 w-1/3 margin-auto top-1/2 left-1/2 p-4"
+                    sx={{ transform: 'translate(-50%, -50%)' }}
+                >
+                    <Confirm
+                        setIsConfirmVisible={setIsConfirmVisible}
+                        confirm={accept}
+                        action="accept this match"
+                        isLoading={isConfirmLoading}
+                        setIsLoading={setIsConfirmLoading}
+                    >
+                        <div>
+                            {finderPost.maps} at {finderPost.time}
+                        </div>
+                    </Confirm>
                 </Box>
             </Modal>
         </div>

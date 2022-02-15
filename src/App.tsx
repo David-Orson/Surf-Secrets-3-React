@@ -10,14 +10,8 @@ import Leaderboard from './views/Leaderboard';
 import Profile from './views/Profile';
 import Match from './views/Match';
 import MatchFinder from './views/MatchFinder';
-import { useSelector } from 'react-redux';
 
 const App = () => {
-    const state = useSelector((state) => state);
-    // just for redux debugging for now
-    setInterval(() => {
-        console.log(state);
-    }, 3000);
     return (
         <div className="App">
             <Router>
