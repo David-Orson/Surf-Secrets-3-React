@@ -25,8 +25,7 @@ export const useAuthService = () => {
     };
 
     const logIn = async (loginCreds: LoginCreds) => {
-        const token = (await getToken(loginCreds)) as any;
-
+        const token = await getToken(loginCreds);
         const account = await getAccount(token.accountId);
 
         setAccount(account);
@@ -34,11 +33,8 @@ export const useAuthService = () => {
     };
 
     const signUp = async (signupCreds: SignupCreds) => {
-        const p1 = await axios.post(`${apiUrl}/auth/signup`, signupCreds);
-        const p2 = getToken(signupCreds);
-
-        const account = await p1.data;
-        const token = await p2;
+        const { data: account } = await axios.post(`${apiUrl}/auth/signup`, signupCreds);
+        const token = await getToken(signupCreds);
 
         setAccount(account);
         setAuthToken(token);

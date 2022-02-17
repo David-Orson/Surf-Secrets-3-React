@@ -29,9 +29,7 @@ const createData = (
     time: Date,
     result: boolean | null,
     isDisputed: boolean
-) => {
-    return { team0, team1, map, time, result, isDisputed };
-};
+) => ({ team0, team1, map, time, result, isDisputed });
 
 const Profile = () => {
     // hooks
@@ -66,14 +64,10 @@ const Profile = () => {
         if (cancelled) return;
 
         matches.forEach((match) => {
-            let result;
-            if (match.result === 1) {
-                result = true;
-            } else if (match.result === 2) {
-                result = false;
-            } else {
-                result = null;
-            }
+          const result = match.result === 1 ? true
+            : match.result === 2 ? false
+            : null
+
             rowData.push(
                 createData(
                     match.team0[0],
