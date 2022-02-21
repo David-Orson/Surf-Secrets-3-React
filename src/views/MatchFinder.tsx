@@ -1,5 +1,6 @@
 // npm
 import React, { useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
 import dayjs from 'dayjs';
 import { useNavigate } from 'react-router-dom';
 
@@ -21,6 +22,7 @@ import { useServices } from '../api/services';
 
 // models
 import { FinderPost } from '../api/models';
+import { RootState } from '../redux/store';
 
 // componenets
 import FinderPostCreator from '../components/FinderPostCreator';
@@ -45,6 +47,10 @@ const MatchFinder = () => {
     const [finderPost, setFinderPost] = useState<FinderPost>({
         id: 0,
     } as FinderPost);
+
+    const userPostIds = useSelector(
+        (state: RootState) => state.account.finderPostIds
+    );
 
     // props
     const rowsPerPage = 10;
@@ -128,11 +134,22 @@ const MatchFinder = () => {
                             return (
                                 <TableRow
                                     key={row.id}
-                                    sx={{
-                                        '&:last-child td, &:last-child th': {
-                                            border: 0,
-                                        },
-                                    }}
+                                    sx={
+                                        userPostIds.includes(row.id)
+                                            ? {
+                                                  '&:last-child td, &:last-child th':
+                                                      {
+                                                          border: 0,
+                                                      },
+                                                  bgcolor: '#ff8',
+                                              }
+                                            : {
+                                                  '&:last-child td, &:last-child th':
+                                                      {
+                                                          border: 0,
+                                                      },
+                                              }
+                                    }
                                 >
                                     <TableCell component="th" scope="row">
                                         {row.maps}
@@ -144,15 +161,17 @@ const MatchFinder = () => {
                                         {row.time}
                                     </TableCell>
                                     <TableCell align="right">
-                                        <Button
-                                            variant="contained"
-                                            onClick={async () => {
-                                                await setFinderPost(row);
-                                                setIsConfirmVisible(true);
-                                            }}
-                                        >
-                                            /
-                                        </Button>
+                                        {userPostIds.includes(row.id) ? null : (
+                                            <Button
+                                                variant="contained"
+                                                onClick={async () => {
+                                                    await setFinderPost(row);
+                                                    setIsConfirmVisible(true);
+                                                }}
+                                            >
+                                                /
+                                            </Button>
+                                        )}
                                     </TableCell>
                                 </TableRow>
                             );

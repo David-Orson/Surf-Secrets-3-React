@@ -27,7 +27,7 @@ const createData = (
     team1: number,
     map: SurfMap,
     time: Date,
-    result: boolean | null,
+    result: string | null,
     isDisputed: boolean
 ) => ({ team0, team1, map, time, result, isDisputed });
 
@@ -64,9 +64,8 @@ const Profile = () => {
         if (cancelled) return;
 
         matches.forEach((match) => {
-          const result = match.result === 1 ? true
-            : match.result === 2 ? false
-            : null
+            const result =
+                match.result === 0 ? 'Win' : match.result === 1 ? 'Loss' : null;
 
             rowData.push(
                 createData(
@@ -175,7 +174,7 @@ const Profile = () => {
                                                 {row.result}
                                             </TableCell>
                                             <TableCell align="right">
-                                                {row.isDisputed}
+                                                {row.isDisputed ? 'Yes' : 'No'}
                                             </TableCell>
                                         </TableRow>
                                     );
