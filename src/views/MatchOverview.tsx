@@ -2,6 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import dayjs from 'dayjs';
+import { useSelector } from 'react-redux';
 
 // mui
 import Button from '@mui/material/Button';
@@ -15,6 +16,7 @@ import { useServices } from '../api/services';
 
 // models
 import { Match } from '../api/models';
+import { RootState } from '../redux/store';
 
 // components
 import ReportMatch from '../components/ReportMatch';
@@ -39,6 +41,13 @@ const MatchOverview = () => {
         result: 4,
     } as unknown as Match);
     const [isReportVisible, setIsReportVisible] = useState(false);
+
+    const account = useSelector((state: RootState) => state.account);
+    const team = match.team0.includes(account.id)
+        ? 0
+        : match.team1.includes(account.id)
+        ? 1
+        : null;
 
     // lifecycle
     useEffect(() => {
@@ -74,14 +83,21 @@ const MatchOverview = () => {
                             {dayjs(match.time).format('hh:mm DD MM YYYY')}
                         </div>
                         <div>map 1: {match.maps[0].name} </div>
-                        <Button
-                            variant="contained"
-                            onClick={async () => {
-                                setIsReportVisible(true);
-                            }}
-                        >
-                            Report Score
-                        </Button>
+                        {(team === 0 &&
+                            match.result0.reduce((a, b): number => a + b) ===
+                                0) ||
+                        (team === 1 &&
+                            match.result1.reduce((a, b): number => a + b) ===
+                                0) ? (
+                            <Button
+                                variant="contained"
+                                onClick={async () => {
+                                    setIsReportVisible(true);
+                                }}
+                            >
+                                Report Score
+                            </Button>
+                        ) : null}
                     </div>
                 ) : (
                     <div>No Match</div>

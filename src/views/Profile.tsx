@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import dayjs from 'dayjs';
+import { useNavigate } from 'react-router-dom';
 
 // mui
 import Paper from '@mui/material/Paper';
@@ -23,18 +24,20 @@ import { Account, SurfMap } from '../api/models';
 import { RootState } from '../redux/store';
 
 const createData = (
+    id: number,
     team0: number,
     team1: number,
     map: SurfMap,
     time: Date,
     result: string | null,
     isDisputed: boolean
-) => ({ team0, team1, map, time, result, isDisputed });
+) => ({ id, team0, team1, map, time, result, isDisputed });
 
 const Profile = () => {
     // hooks
     const { getAccount, getMatchesByAccount } = useServices();
     const { username } = useParams();
+    const navigate = useNavigate();
 
     // state
     const account = useSelector((state: RootState) => state.account);
@@ -66,10 +69,15 @@ const Profile = () => {
 
         matches.forEach((match) => {
             const result =
-                match.result === 0 ? 'Win' : match.result === 1 ? 'Loss' : null;
+                (match.result === 0 || 1) && match.result === 0
+                    ? match.team0.includes(account.id)
+                        ? 'Win'
+                        : 'Loss'
+                    : null;
 
             rowData.push(
                 createData(
+                    match.id,
                     match.team0[0],
                     match.team1[0],
                     match.maps[0],
@@ -163,6 +171,11 @@ const Profile = () => {
                                                             {
                                                                 border: 0,
                                                             },
+                                                    }}
+                                                    onClick={() => {
+                                                        navigate(
+                                                            `/match/${row.id}`
+                                                        );
                                                     }}
                                                 >
                                                     <TableCell

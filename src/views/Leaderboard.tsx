@@ -1,5 +1,6 @@
 // npm
 import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 // mui
 import Table from '@mui/material/Table';
@@ -30,6 +31,7 @@ const createData = (
 const Leaderboard = () => {
     // hooks
     const { getAllAccount } = useServices();
+    const navigate = useNavigate();
 
     // reactive
     const [page, setPage] = useState(0);
@@ -106,6 +108,9 @@ const Leaderboard = () => {
                                         '&:last-child td, &:last-child th': {
                                             border: 0,
                                         },
+                                    }}
+                                    onClick={() => {
+                                        navigate(`/profile/${row.name}`);
                                     }}
                                 >
                                     <TableCell

@@ -1,5 +1,6 @@
 // npm
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 // mui
 import Box from '@mui/material/Box';
@@ -21,6 +22,7 @@ interface Props {
 const ReportMatch = (props: Props) => {
     // hooks
     const { reportMatch } = useServices();
+    const navigate = useNavigate();
 
     // reactive
     const [isLoading, setIsLoading] = useState(false);
@@ -35,6 +37,8 @@ const ReportMatch = (props: Props) => {
 
         setIsLoading(false);
         props.setIsReportVisible(false);
+
+        navigate(`/`);
     };
 
     return (
