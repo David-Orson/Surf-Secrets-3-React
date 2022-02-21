@@ -20,8 +20,18 @@ export const useAccountActions = () => {
         });
     };
 
+    const addFinderPostId = (id: number) => {
+        const account: Account = JSON.parse(
+            localStorage.getItem('account') as string
+        );
+
+        account.finderPostIds.push(id);
+        setAccount(account);
+    };
+
     return {
         setAccount,
         removeAccount,
+        addFinderPostId,
     };
 };

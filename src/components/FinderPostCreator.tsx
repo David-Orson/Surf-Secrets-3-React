@@ -26,6 +26,7 @@ import TextField from '@mui/material/TextField';
 
 // hooks
 import { useServices } from '../api/services';
+import { useActions } from '../redux/actions';
 
 // models
 import { FinderPost, SurfMap } from '../api/models';
@@ -173,11 +174,13 @@ const StyledPopper = styled(PopperUnstyled)`
 // local types
 interface Props {
     setIsCreateVisible: Function;
+    refreshTable: Function;
 }
 
 const FinderPostCreator = (props: Props) => {
     // hooks
     const { createFinderPost, getAllMaps } = useServices();
+    const { addFinderPostId } = useActions();
 
     // reactive
     const [isLoading, setIsLoading] = useState(false);
@@ -198,7 +201,11 @@ const FinderPostCreator = (props: Props) => {
         finderPost.maps = [map as SurfMap];
         finderPost.time = time as Date;
 
-        await createFinderPost(finderPost);
+        const resPost = await createFinderPost(finderPost);
+
+        addFinderPostId(resPost.id);
+
+        props.refreshTable();
 
         setIsLoading(false);
         props.setIsCreateVisible(false);

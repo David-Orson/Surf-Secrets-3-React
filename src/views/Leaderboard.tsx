@@ -113,13 +113,7 @@ const Leaderboard = () => {
                                         navigate(`/profile/${row.name}`);
                                     }}
                                 >
-                                    <TableCell
-                                        component="th"
-                                        scope="row"
-                                        onClick={() => {
-                                            console.log(row.name);
-                                        }}
-                                    >
+                                    <TableCell component="th" scope="row">
                                         {row.name}
                                     </TableCell>
                                     <TableCell align="right">

@@ -71,31 +71,32 @@ const MatchFinder = () => {
         navigate(`/match/${match.id}`);
     };
 
-    // lifecycle
-    useEffect(() => {
+    const refreshTable = async (cancelled?: boolean) => {
         let rowData: any[] = [];
-        let cancelled = false;
         let posts: FinderPost[];
 
-        const request = async () => {
-            posts = await getAllFinderPosts();
-            if (cancelled) return;
+        posts = await getAllFinderPosts();
+        if (cancelled) return;
 
-            posts?.forEach((post) => {
-                rowData.push(
-                    createData(
-                        post.id,
-                        post.maps[0].name,
-                        post.maps.length,
-                        post.time
-                    )
-                );
-            });
+        posts?.forEach((post) => {
+            rowData.push(
+                createData(
+                    post.id,
+                    post.maps[0].name,
+                    post.maps.length,
+                    post.time
+                )
+            );
+        });
 
-            setRows(rowData.sort((a, b) => b.wins - a.wins));
-        };
+        setRows(rowData.sort((a, b) => b.wins - a.wins));
+    };
 
-        request();
+    // lifecycle
+    useEffect(() => {
+        let cancelled = false;
+
+        refreshTable(cancelled);
 
         return () => {
             cancelled = true;
@@ -199,6 +200,7 @@ const MatchFinder = () => {
                 >
                     <FinderPostCreator
                         setIsCreateVisible={setIsCreateVisible}
+                        refreshTable={refreshTable}
                     />
                 </Box>
             </Modal>

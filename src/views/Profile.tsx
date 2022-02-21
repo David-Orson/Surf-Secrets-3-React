@@ -181,11 +181,6 @@ const Profile = () => {
                                                     <TableCell
                                                         component="th"
                                                         scope="row"
-                                                        onClick={() => {
-                                                            console.log(
-                                                                row.name
-                                                            );
-                                                        }}
                                                     >
                                                         {row.team0}
                                                     </TableCell>
