@@ -135,6 +135,7 @@ const MatchFinder = () => {
                                 <TableRow
                                     key={row.id}
                                     sx={
+                                        userPostIds &&
                                         userPostIds.includes(row.id)
                                             ? {
                                                   '&:last-child td, &:last-child th':
@@ -161,7 +162,8 @@ const MatchFinder = () => {
                                         {row.time}
                                     </TableCell>
                                     <TableCell align="right">
-                                        {userPostIds.includes(row.id) ? null : (
+                                        {userPostIds &&
+                                        userPostIds.includes(row.id) ? null : (
                                             <Button
                                                 variant="contained"
                                                 onClick={async () => {

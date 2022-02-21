@@ -62,6 +62,7 @@ const Profile = () => {
         let matches = await getMatchesByAccount(account.id);
 
         if (cancelled) return;
+        if (!matches) return;
 
         matches.forEach((match) => {
             const result =
@@ -117,79 +118,101 @@ const Profile = () => {
             </Paper>
             <Paper>
                 <div className="m-4">
-                    <TableContainer component={Paper}>
-                        <Table
-                            sx={{ minWidth: 650 }}
-                            size="small"
-                            aria-label="a dense table"
-                        >
-                            <TableHead>
-                                <TableRow>
-                                    <TableCell>Team A</TableCell>
-                                    <TableCell align="right">Team B</TableCell>
-                                    <TableCell align="right">Maps</TableCell>
-                                    <TableCell align="right">Time</TableCell>
-                                    <TableCell align="right">Result</TableCell>
-                                    <TableCell align="right">
-                                        Was Disputed
-                                    </TableCell>
-                                </TableRow>
-                            </TableHead>
-                            <TableBody>
-                                {rows.map((row, i) => {
-                                    if (
-                                        i > (page + 1) * rowsPerPage - 1 ||
-                                        i < page * rowsPerPage
-                                    )
-                                        return;
-                                    return (
-                                        <TableRow
-                                            key={row.id}
-                                            sx={{
-                                                '&:last-child td, &:last-child th':
-                                                    {
-                                                        border: 0,
-                                                    },
-                                            }}
-                                        >
-                                            <TableCell
-                                                component="th"
-                                                scope="row"
-                                                onClick={() => {
-                                                    console.log(row.name);
-                                                }}
-                                            >
-                                                {row.team0}
+                    {rows.length ? (
+                        <div>
+                            <TableContainer component={Paper}>
+                                <Table
+                                    sx={{ minWidth: 650 }}
+                                    size="small"
+                                    aria-label="a dense table"
+                                >
+                                    <TableHead>
+                                        <TableRow>
+                                            <TableCell>Team A</TableCell>
+                                            <TableCell align="right">
+                                                Team B
                                             </TableCell>
                                             <TableCell align="right">
-                                                {row.team1}
+                                                Maps
                                             </TableCell>
                                             <TableCell align="right">
-                                                {row.map.name}
+                                                Time
                                             </TableCell>
                                             <TableCell align="right">
-                                                {row.time}
+                                                Result
                                             </TableCell>
                                             <TableCell align="right">
-                                                {row.result}
-                                            </TableCell>
-                                            <TableCell align="right">
-                                                {row.isDisputed ? 'Yes' : 'No'}
+                                                Was Disputed
                                             </TableCell>
                                         </TableRow>
-                                    );
-                                })}
-                            </TableBody>
-                        </Table>
-                    </TableContainer>
-                    <TablePagination
-                        rowsPerPageOptions={[]}
-                        component="div"
-                        count={rows.length}
-                        rowsPerPage={rowsPerPage}
-                        page={page}
-                        onPageChange={changePage}
-                    />
+                                    </TableHead>
+                                    <TableBody>
+                                        {rows.map((row, i) => {
+                                            if (
+                                                i >
+                                                    (page + 1) * rowsPerPage -
+                                                        1 ||
+                                                i < page * rowsPerPage
+                                            )
+                                                return;
+                                            return (
+                                                <TableRow
+                                                    key={row.id}
+                                                    sx={{
+                                                        '&:last-child td, &:last-child th':
+                                                            {
+                                                                border: 0,
+                                                            },
+                                                    }}
+                                                >
+                                                    <TableCell
+                                                        component="th"
+                                                        scope="row"
+                                                        onClick={() => {
+                                                            console.log(
+                                                                row.name
+                                                            );
+                                                        }}
+                                                    >
+                                                        {row.team0}
+                                                    </TableCell>
+                                                    <TableCell align="right">
+                                                        {row.team1}
+                                                    </TableCell>
+                                                    <TableCell align="right">
+                                                        {row.map.name}
+                                                    </TableCell>
+                                                    <TableCell align="right">
+                                                        {row.time}
+                                                    </TableCell>
+                                                    <TableCell align="right">
+                                                        {row.result}
+                                                    </TableCell>
+                                                    <TableCell align="right">
+                                                        {row.isDisputed
+                                                            ? 'Yes'
+                                                            : 'No'}
+                                                    </TableCell>
+                                                </TableRow>
+                                            );
+                                        })}
+                                    </TableBody>
+                                </Table>
+                            </TableContainer>
+                            <TablePagination
+                                rowsPerPageOptions={[]}
+                                component="div"
+                                count={rows.length}
+                                rowsPerPage={rowsPerPage}
+                                page={page}
+                                onPageChange={changePage}
+                            />
+                        </div>
+                    ) : (
+                        <div className="m-4 p-4">
+                            User has not completed any matches
+                        </div>
+                    )}
                 </div>
             </Paper>
         </div>
