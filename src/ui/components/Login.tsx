@@ -43,9 +43,11 @@ const Login = (props: Props) => {
     };
 
     return (
-        <div className="flex justify-center flex-col items-center">
+        <div className="bg-stone-900 flex justify-center flex-col items-center p-6">
             <div className="m-4">
-                <Typography variant="h2">Login</Typography>
+                <Typography variant="h4" color="white">
+                    Login
+                </Typography>
             </div>
             <form
                 className="w-full flex justify-center items-center flex-col"
@@ -63,6 +65,7 @@ const Login = (props: Props) => {
                         setEmail(e.target.value);
                     }}
                     margin="normal"
+                    required
                 />
                 <TextField
                     className="w-80"
@@ -75,8 +78,10 @@ const Login = (props: Props) => {
                         setPassword(e.target.value);
                     }}
                     margin="normal"
+                    required
                 />
                 <LoadingButton
+                    sx={{ marginTop: 2 }}
                     type="submit"
                     variant="contained"
                     color="primary"

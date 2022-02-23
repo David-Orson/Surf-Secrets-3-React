@@ -17,14 +17,16 @@ interface Props {
 
 const Confirm = forwardRef<HTMLUListElement, Props>((props: Props, ref) => {
     return (
-        <div className="flex justify-center m-4 flex-col items-center">
-            <Typography>
+        <div className="bg-stone-900 flex justify-center flex-col items-center p-6">
+            <Typography color="white">
                 Are you sure you would like to {props.action} ?
             </Typography>
-            {props.children}
-            <div className="flex justify-center mt-4 items-center">
+            <Typography sx={{ marginTop: 2, marginBottom: 2 }} color="white">
+                {props.children}
+            </Typography>
+
+            <div className="flex justify-center mx-4 items-center">
                 <LoadingButton
-                    color="secondary"
                     loading={props.isLoading}
                     onClick={() => {
                         props.setIsLoading(false);

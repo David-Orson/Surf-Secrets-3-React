@@ -30,8 +30,7 @@ import { RootState } from '../../redux/store';
 import FinderPostCreator from '../components/FinderPostCreator';
 import Confirm from '../components/Confirm';
 
-const createData = (id: number, maps: string, games: number, t: Date) => {
-    const time = dayjs(t).format('h:mm A MMM-DD YYYY');
+const createData = (id: number, maps: string, games: number, time: Date) => {
     return { id, maps, games, time };
 };
 
@@ -174,10 +173,16 @@ const MatchFinder = () => {
                                     <TableCell align="right">
                                         {userPostIds &&
                                         userPostIds.includes(row.id) ? (
-                                            <Typography>{row.time}</Typography>
+                                            <Typography>
+                                                {dayjs(row.time).format(
+                                                    'h:mm A MMM-DD YYYY'
+                                                )}
+                                            </Typography>
                                         ) : (
                                             <Typography color="primary">
-                                                {row.time}
+                                                {dayjs(row.time).format(
+                                                    'h:mm A MMM-DD YYYY'
+                                                )}
                                             </Typography>
                                         )}
                                     </TableCell>
@@ -214,7 +219,7 @@ const MatchFinder = () => {
                 onClose={() => setIsCreateVisible(false)}
             >
                 <Box
-                    className="absolute bg-slate-50 w-1/3 margin-auto top-1/2 left-1/2 p-4"
+                    className="absolute bg-slate-50 w-1/3 margin-auto top-1/2 left-1/2"
                     sx={{ transform: 'translate(-50%, -50%)' }}
                 >
                     <FinderPostCreator
@@ -229,7 +234,7 @@ const MatchFinder = () => {
                 onClose={() => setIsConfirmVisible(false)}
             >
                 <Box
-                    className="absolute bg-slate-50 w-1/3 margin-auto top-1/2 left-1/2 p-4"
+                    className="absolute bg-slate-50 w-1/3 margin-auto top-1/2 left-1/2"
                     sx={{ transform: 'translate(-50%, -50%)' }}
                 >
                     <Confirm
@@ -240,7 +245,18 @@ const MatchFinder = () => {
                         setIsLoading={setIsConfirmLoading}
                     >
                         <div>
-                            {finderPost.maps} at {finderPost.time}
+                            <span className="text-yellow-200">
+                                {finderPost.maps}
+                            </span>
+                            {'  '}
+                            at{'  '}
+                            <span className="text-blue-400">
+                                {' '}
+                                {dayjs(finderPost.time).format('h:mm A')}
+                            </span>
+                            <div className="text-blue-400 text-center mt-1">
+                                {dayjs(finderPost.time).format('MMM-DD YYYY')}
+                            </div>{' '}
                         </div>
                     </Confirm>
                 </Box>

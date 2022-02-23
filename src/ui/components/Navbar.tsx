@@ -75,7 +75,7 @@ const Navbar = () => {
                 onClose={() => setIsLoginVisible(false)}
             >
                 <Box
-                    className="absolute bg-slate-50 w-1/3 margin-auto top-1/2 left-1/2 p-4"
+                    className="absolute bg-slate-50 w-1/3 top-1/2 left-1/2"
                     sx={{ transform: 'translate(-50%, -50%)' }}
                 >
                     <Login setIsLoginVisible={setIsLoginVisible} />
@@ -86,7 +86,7 @@ const Navbar = () => {
                 onClose={() => setIsSignupVisible(false)}
             >
                 <Box
-                    className="absolute bg-slate-50 w-1/3 margin-auto top-1/2 left-1/2 p-4"
+                    className="absolute bg-slate-50 w-1/3 margin-auto top-1/2 left-1/2"
                     sx={{ transform: 'translate(-50%, -50%)' }}
                 >
                     <Signup setIsSignupVisible={setIsSignupVisible} />

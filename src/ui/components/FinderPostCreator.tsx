@@ -228,9 +228,11 @@ const FinderPostCreator = (props: Props) => {
     }, []);
 
     return (
-        <div className="flex justify-center flex-col items-center">
+        <div className="bg-stone-900 flex justify-center flex-col items-center p-4">
             <div className="m-4">
-                <Typography variant="h5">Create Match Finder Post</Typography>
+                <Typography variant="h5" color="white">
+                    Create Match Finder Post
+                </Typography>
             </div>
             <form
                 className="w-full flex justify-center items-center flex-col"
@@ -244,10 +246,9 @@ const FinderPostCreator = (props: Props) => {
                         </StyledOption>
                     ))}
                 </CustomSelect>
-
+                <div className="h-6"></div>
                 <LocalizationProvider dateAdapter={DateAdapter}>
                     <TimePicker
-                        label="Time"
                         value={time}
                         onChange={(newTime) => setTime(newTime)}
                         renderInput={(params: any) => <TextField {...params} />}
@@ -255,6 +256,7 @@ const FinderPostCreator = (props: Props) => {
                 </LocalizationProvider>
 
                 <LoadingButton
+                    sx={{ marginTop: 2, marginBottom: 1 }}
                     type="submit"
                     variant="contained"
                     color="primary"

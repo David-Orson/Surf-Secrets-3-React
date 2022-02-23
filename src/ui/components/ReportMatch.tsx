@@ -42,7 +42,7 @@ const ReportMatch = (props: Props) => {
     };
 
     return (
-        <div className="flex justify-center items-center">
+        <div className="bg-stone-900 flex justify-center items-center p-8">
             <Box sx={{ minWidth: 120 }}>
                 <FormControl fullWidth>
                     <InputLabel id="select-label-a">Team A</InputLabel>
@@ -77,6 +77,7 @@ const ReportMatch = (props: Props) => {
                 </FormControl>
 
                 <LoadingButton
+                    sx={{ marginTop: 3 }}
                     type="submit"
                     variant="contained"
                     color="primary"

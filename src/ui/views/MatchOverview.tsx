@@ -122,15 +122,17 @@ const MatchOverview = () => {
                         (team === 1 &&
                             match.result1.reduce((a, b): number => a + b) ===
                                 0) ? (
-                            <Button
-                                sx={{ paddingBottom: 4 }}
-                                variant="contained"
-                                onClick={async () => {
-                                    setIsReportVisible(true);
-                                }}
-                            >
-                                Report Score
-                            </Button>
+                            <Container>
+                                <Button
+                                    sx={{ marginBottom: 4 }}
+                                    variant="contained"
+                                    onClick={async () => {
+                                        setIsReportVisible(true);
+                                    }}
+                                >
+                                    Report Score
+                                </Button>
+                            </Container>
                         ) : null}
                     </div>
                 ) : (
@@ -143,7 +145,7 @@ const MatchOverview = () => {
                 onClose={() => setIsReportVisible(false)}
             >
                 <Box
-                    className="absolute bg-slate-50 w-1/3 margin-auto top-1/2 left-1/2 p-4"
+                    className="absolute bg-slate-50 w-1/3 margin-auto top-1/2 left-1/2"
                     sx={{ transform: 'translate(-50%, -50%)' }}
                 >
                     <ReportMatch
