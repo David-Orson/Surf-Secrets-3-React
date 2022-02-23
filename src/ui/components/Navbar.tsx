@@ -31,18 +31,19 @@ const Navbar = () => {
                 {!isAuthenticated() ? (
                     <Toolbar>
                         <Container sx={{ flexGrow: 1 }}>
-                            <Button color="inherit" component={Link} to="/">
+                            <Button color="primary" component={Link} to="/">
                                 Leaderboard
                             </Button>
                         </Container>
                         <Button
-                            color="inherit"
+                            color="primary"
                             onClick={() => setIsLoginVisible(true)}
                         >
                             Login
                         </Button>
                         <Button
-                            color="inherit"
+                            variant="contained"
+                            color="primary"
                             onClick={() => setIsSignupVisible(true)}
                         >
                             Signup
@@ -51,19 +52,19 @@ const Navbar = () => {
                 ) : (
                     <Toolbar>
                         <Container sx={{ flexGrow: 1 }}>
-                            <Button color="inherit" component={Link} to="/">
+                            <Button color="primary" component={Link} to="/">
                                 Leaderboard
                             </Button>
 
                             <Button
-                                color="inherit"
+                                color="primary"
                                 component={Link}
                                 to="/match-finder"
                             >
                                 Match Finder
                             </Button>
                         </Container>
-                        <Button color="inherit" component={Link} to="/profile">
+                        <Button color="primary" component={Link} to="/profile">
                             Profile
                         </Button>
                     </Toolbar>
