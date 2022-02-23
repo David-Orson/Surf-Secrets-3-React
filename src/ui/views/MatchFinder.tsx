@@ -16,6 +16,7 @@ import TablePagination from '@mui/material/TablePagination';
 import Paper from '@mui/material/Paper';
 import Modal from '@mui/material/Modal';
 import Box from '@mui/material/Box';
+import Typography from '@mui/material/Typography';
 import { blue } from '@mui/material/colors';
 
 // hooks
@@ -30,7 +31,7 @@ import FinderPostCreator from '../components/FinderPostCreator';
 import Confirm from '../components/Confirm';
 
 const createData = (id: number, maps: string, games: number, t: Date) => {
-    const time = dayjs(t).format('hh:mm A');
+    const time = dayjs(t).format('h:mm A MMM-DD YYYY');
     return { id, maps, games, time };
 };
 
@@ -106,6 +107,13 @@ const MatchFinder = () => {
 
     return (
         <div className="m-4">
+            <Typography
+                sx={{ padding: 2, color: 'white' }}
+                variant="h4"
+                gutterBottom
+            >
+                Match Finder
+            </Typography>
             <Button
                 sx={{ marginBottom: 4 }}
                 variant={'contained'}
@@ -164,7 +172,14 @@ const MatchFinder = () => {
                                         {row.games}
                                     </TableCell>
                                     <TableCell align="right">
-                                        {row.time}
+                                        {userPostIds &&
+                                        userPostIds.includes(row.id) ? (
+                                            <Typography>{row.time}</Typography>
+                                        ) : (
+                                            <Typography color="primary">
+                                                {row.time}
+                                            </Typography>
+                                        )}
                                     </TableCell>
                                     <TableCell align="right">
                                         {userPostIds &&

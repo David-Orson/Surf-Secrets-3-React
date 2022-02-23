@@ -11,6 +11,7 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import TablePagination from '@mui/material/TablePagination';
 import Paper from '@mui/material/Paper';
+import Typography from '@mui/material/Typography';
 
 // hooks
 import { useServices } from '../../api/services';
@@ -86,6 +87,13 @@ const Leaderboard = () => {
 
     return (
         <div className="m-4">
+            <Typography
+                sx={{ padding: 2, color: 'white' }}
+                variant="h4"
+                gutterBottom
+            >
+                Leaderboard
+            </Typography>
             <TableContainer component={Paper}>
                 <Table sx={{ minWidth: 650 }}>
                     <TableHead>

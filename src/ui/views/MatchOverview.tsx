@@ -10,6 +10,7 @@ import Paper from '@mui/material/Paper';
 import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
 import Box from '@mui/material/Box';
+import Container from '@mui/material/Container';
 
 // hooks
 import { useServices } from '../../api/services';
@@ -72,17 +73,49 @@ const MatchOverview = () => {
 
     return (
         <div>
+            <Typography
+                sx={{ padding: 2, color: 'white' }}
+                variant="h4"
+                gutterBottom
+            >
+                Match Overview
+            </Typography>
             <Paper>
                 {match.id ? (
                     <div>
-                        <Typography variant="h3">
+                        <Typography
+                            sx={{ paddingTop: 4 }}
+                            variant="h3"
+                            align="center"
+                        >
                             {match.team0[0]} vs {match.team1[0]}
                         </Typography>
-                        <div>
-                            Scheduled time{' '}
-                            {dayjs(match.time).format('hh:mm DD MM YYYY')}
-                        </div>
-                        <div>map 1: {match.maps[0].name} </div>
+                        <Container sx={{ paddingBottom: 4 }}>
+                            <Typography>Match Time: </Typography>
+                            <Typography color="primary">
+                                {dayjs(match.time).format('h:mm A MMM-DD YYYY')}
+                            </Typography>
+                            <Paper>
+                                <Container sx={{ padding: 2 }}>
+                                    <Typography>
+                                        Map 1: {match.maps[0].name}
+                                    </Typography>
+                                    {match.result === 0 ||
+                                    match.result === 1 ? (
+                                        match.result === 0 ? (
+                                            <Typography color="lightGreen">
+                                                Winner: {match.team0[0]}
+                                            </Typography>
+                                        ) : (
+                                            <Typography color="lightGreen">
+                                                Winner: {match.team1[0]}
+                                            </Typography>
+                                        )
+                                    ) : null}
+                                </Container>
+                            </Paper>
+                        </Container>
+
                         {(team === 0 &&
                             match.result0.reduce((a, b): number => a + b) ===
                                 0) ||
@@ -90,6 +123,7 @@ const MatchOverview = () => {
                             match.result1.reduce((a, b): number => a + b) ===
                                 0) ? (
                             <Button
+                                sx={{ paddingBottom: 4 }}
                                 variant="contained"
                                 onClick={async () => {
                                     setIsReportVisible(true);

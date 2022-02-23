@@ -159,6 +159,9 @@ const Profile = () => {
             </Paper>
             <Paper>
                 <div className="m-4">
+                    <Typography sx={{ padding: 2 }} variant="h5" gutterBottom>
+                        Match History
+                    </Typography>
                     {rows.length ? (
                         <div>
                             <TableContainer component={Paper}>
@@ -224,9 +227,13 @@ const Profile = () => {
                                                         {row.map.name}
                                                     </TableCell>
                                                     <TableCell align="right">
-                                                        {dayjs(row.time).format(
-                                                            'hh:mm A MMM DD YYYY'
-                                                        )}
+                                                        <Typography color="primary">
+                                                            {dayjs(
+                                                                row.time
+                                                            ).format(
+                                                                'h:mm A MMM-DD YYYY'
+                                                            )}
+                                                        </Typography>
                                                     </TableCell>
                                                     <TableCell
                                                         sx={
