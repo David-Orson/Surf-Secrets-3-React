@@ -15,6 +15,7 @@ export const useAccountActions = () => {
     };
 
     const removeAccount = () => {
+        localStorage.removeItem('account');
         dispatch({
             type: REMOVE_ACCOUNT,
         });

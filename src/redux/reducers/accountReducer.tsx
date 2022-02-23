@@ -15,7 +15,7 @@ const accountReducer: any = (state = initialState, action: any) => {
             };
 
         case REMOVE_ACCOUNT:
-            return initialState;
+            return null;
         default:
             return state;
     }

@@ -1,6 +1,8 @@
 // npm
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Link } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 
 // mui
 import Container from '@mui/material/Container';
@@ -17,13 +19,26 @@ import { useActions } from '../../redux/actions';
 import Login from './Login';
 import Signup from './Signup';
 
+// models
+import { RootState } from '../../redux/store';
+
 const Navbar = () => {
     // hooks
-    const { isAuthenticated } = useActions();
+    const { isAuthenticated, removeAccount, removeAuthToken } = useActions();
+    const navigate = useNavigate();
 
     // reactive
     const [isLoginVisible, setIsLoginVisible] = useState(false);
     const [isSignupVisible, setIsSignupVisible] = useState(false);
+
+    const account = useSelector((state: RootState) => state.account);
+
+    // methods
+    const logOut = () => {
+        removeAccount();
+        removeAuthToken();
+        navigate('/');
+    };
 
     return (
         <div>
@@ -64,8 +79,11 @@ const Navbar = () => {
                                 Match Finder
                             </Button>
                         </Container>
+                        <Button color="error" onClick={() => logOut()}>
+                            Logout
+                        </Button>
                         <Button color="primary" component={Link} to="/profile">
-                            Profile
+                            {account.username}
                         </Button>
                     </Toolbar>
                 )}
