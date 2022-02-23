@@ -26,8 +26,8 @@ import { RootState } from '../../redux/store';
 
 const createData = (
     id: number,
-    team0: number,
-    team1: number,
+    team0: string,
+    team1: string,
     map: SurfMap,
     time: Date,
     result: string | null,
@@ -91,8 +91,8 @@ const Profile = () => {
             rowData.push(
                 createData(
                     match.id,
-                    match.team0[0],
-                    match.team1[0],
+                    match.team0Names[0],
+                    match.team1Names[0],
                     match.maps[0],
                     match.time,
                     result,
@@ -114,7 +114,7 @@ const Profile = () => {
     useEffect(() => {
         cancelled = false;
 
-        if (username === account.username || !username) {
+        if ((account && username === account.username) || !username) {
             matchesRequest(account);
         } else {
             accountRequest();

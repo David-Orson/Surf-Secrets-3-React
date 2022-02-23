@@ -44,10 +44,12 @@ const MatchOverview = () => {
     const [isReportVisible, setIsReportVisible] = useState(false);
 
     const account = useSelector((state: RootState) => state.account);
-    const team = match.team0.includes(account.id)
-        ? 0
-        : match.team1.includes(account.id)
-        ? 1
+    const team = account
+        ? match.team0.includes(account.id)
+            ? 0
+            : match.team1.includes(account.id)
+            ? 1
+            : null
         : null;
 
     // lifecycle
@@ -88,7 +90,7 @@ const MatchOverview = () => {
                             variant="h3"
                             align="center"
                         >
-                            {match.team0[0]} vs {match.team1[0]}
+                            {match.team0Names[0]} vs {match.team1Names[0]}
                         </Typography>
                         <Container sx={{ paddingBottom: 4 }}>
                             <Typography>Match Time: </Typography>
@@ -104,11 +106,11 @@ const MatchOverview = () => {
                                     match.result === 1 ? (
                                         match.result === 0 ? (
                                             <Typography color="lightGreen">
-                                                Winner: {match.team0[0]}
+                                                Winner: {match.team0Names[0]}
                                             </Typography>
                                         ) : (
                                             <Typography color="lightGreen">
-                                                Winner: {match.team1[0]}
+                                                Winner: {match.team1Names[0]}
                                             </Typography>
                                         )
                                     ) : null}
