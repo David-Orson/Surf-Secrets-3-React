@@ -6,6 +6,7 @@ import dayjs from 'dayjs';
 import { useNavigate } from 'react-router-dom';
 
 // mui
+import Container from '@mui/material/Container';
 import Paper from '@mui/material/Paper';
 import Typography from '@mui/material/Typography';
 import Table from '@mui/material/Table';
@@ -115,14 +116,46 @@ const Profile = () => {
     return (
         <div>
             <Paper>
-                <Typography variant="h3">{profile.username}</Typography>
-                <div>
-                    Member since{' '}
-                    {dayjs(profile.createDate).format('MMMM DD YYYY')}
-                </div>
-                <div>{profile.win} wins</div>
-                <div>{profile.loss} losses</div>
-                <div>{profile.disputes} unresolved disputes</div>
+                <Container sx={{ paddingTop: 2 }}>
+                    <Typography variant="h3">{profile.username}</Typography>
+                    <div className="mb-8">
+                        Member since{' '}
+                        {dayjs(profile.createDate).format('MMMM DD YYYY')}
+                    </div>
+                    <TableContainer sx={{ padding: '0 0 24px 0' }}>
+                        <Table sx={{ width: 300 }}>
+                            <TableHead>
+                                <TableRow>
+                                    <TableCell align="center">Wins</TableCell>
+                                    <TableCell align="center">Losses</TableCell>
+                                    <TableCell align="center">
+                                        Disputes Pending
+                                    </TableCell>
+                                </TableRow>
+                            </TableHead>
+                            <TableBody>
+                                <TableRow>
+                                    <TableCell
+                                        sx={{ color: 'lightGreen' }}
+                                        component="th"
+                                        align="center"
+                                    >
+                                        {profile.win}
+                                    </TableCell>
+                                    <TableCell
+                                        sx={{ color: 'red' }}
+                                        align="center"
+                                    >
+                                        {profile.loss}
+                                    </TableCell>
+                                    <TableCell align="center">
+                                        {profile.disputes}
+                                    </TableCell>
+                                </TableRow>
+                            </TableBody>
+                        </Table>
+                    </TableContainer>
+                </Container>
             </Paper>
             <Paper>
                 <div className="m-4">
@@ -191,9 +224,22 @@ const Profile = () => {
                                                         {row.map.name}
                                                     </TableCell>
                                                     <TableCell align="right">
-                                                        {row.time}
+                                                        {dayjs(row.time).format(
+                                                            'hh:mm A MMM DD YYYY'
+                                                        )}
                                                     </TableCell>
-                                                    <TableCell align="right">
+                                                    <TableCell
+                                                        sx={
+                                                            row.result === 'Win'
+                                                                ? {
+                                                                      color: 'lightGreen',
+                                                                  }
+                                                                : {
+                                                                      color: 'red',
+                                                                  }
+                                                        }
+                                                        align="right"
+                                                    >
                                                         {row.result}
                                                     </TableCell>
                                                     <TableCell align="right">

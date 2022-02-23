@@ -28,6 +28,11 @@ const createData = (
     return { name, games, wins, losses, disputes };
 };
 
+const tableStyle = {
+    header: { fontSize: 22 },
+    cell: { fontSize: 18 },
+};
+
 const Leaderboard = () => {
     // hooks
     const { getAllAccount } = useServices();
@@ -80,18 +85,22 @@ const Leaderboard = () => {
     return (
         <div className="m-4">
             <TableContainer component={Paper}>
-                <Table
-                    sx={{ minWidth: 650 }}
-                    size="small"
-                    aria-label="a dense table"
-                >
+                <Table sx={{ minWidth: 650 }}>
                     <TableHead>
                         <TableRow>
-                            <TableCell>Player</TableCell>
-                            <TableCell align="right">Games</TableCell>
-                            <TableCell align="right">Wins</TableCell>
-                            <TableCell align="right">Losses</TableCell>
-                            <TableCell align="right">Disputes</TableCell>
+                            <TableCell sx={tableStyle.header}>Player</TableCell>
+                            <TableCell sx={tableStyle.header} align="right">
+                                Games
+                            </TableCell>
+                            <TableCell sx={tableStyle.header} align="right">
+                                Wins
+                            </TableCell>
+                            <TableCell sx={tableStyle.header} align="right">
+                                Losses
+                            </TableCell>
+                            <TableCell sx={tableStyle.header} align="right">
+                                Disputes
+                            </TableCell>
                         </TableRow>
                     </TableHead>
                     <TableBody>
@@ -113,19 +122,35 @@ const Leaderboard = () => {
                                         navigate(`/profile/${row.name}`);
                                     }}
                                 >
-                                    <TableCell component="th" scope="row">
+                                    <TableCell
+                                        sx={tableStyle.cell}
+                                        component="th"
+                                        scope="row"
+                                    >
                                         {row.name}
                                     </TableCell>
-                                    <TableCell align="right">
+                                    <TableCell
+                                        sx={tableStyle.cell}
+                                        align="right"
+                                    >
                                         {row.games}
                                     </TableCell>
-                                    <TableCell align="right">
+                                    <TableCell
+                                        sx={tableStyle.cell}
+                                        align="right"
+                                    >
                                         {row.wins}
                                     </TableCell>
-                                    <TableCell align="right">
+                                    <TableCell
+                                        sx={tableStyle.cell}
+                                        align="right"
+                                    >
                                         {row.losses}
                                     </TableCell>
-                                    <TableCell align="right">
+                                    <TableCell
+                                        sx={tableStyle.cell}
+                                        align="right"
+                                    >
                                         {row.disputes}
                                     </TableCell>
                                 </TableRow>
