@@ -31,6 +31,8 @@ const createData = (
 const tableStyle = {
     header: { fontSize: 22 },
     cell: { fontSize: 18 },
+    winCell: { fontSize: 18, color: 'lightGreen' },
+    lossCell: { fontSize: 18, color: 'red' },
 };
 
 const Leaderboard = () => {
@@ -136,13 +138,13 @@ const Leaderboard = () => {
                                         {row.games}
                                     </TableCell>
                                     <TableCell
-                                        sx={tableStyle.cell}
+                                        sx={tableStyle.winCell}
                                         align="right"
                                     >
                                         {row.wins}
                                     </TableCell>
                                     <TableCell
-                                        sx={tableStyle.cell}
+                                        sx={tableStyle.lossCell}
                                         align="right"
                                     >
                                         {row.losses}

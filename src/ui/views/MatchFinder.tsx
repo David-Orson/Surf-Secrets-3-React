@@ -16,6 +16,7 @@ import TablePagination from '@mui/material/TablePagination';
 import Paper from '@mui/material/Paper';
 import Modal from '@mui/material/Modal';
 import Box from '@mui/material/Box';
+import { blue } from '@mui/material/colors';
 
 // hooks
 import { useServices } from '../../api/services';
@@ -106,6 +107,7 @@ const MatchFinder = () => {
     return (
         <div className="m-4">
             <Button
+                sx={{ marginBottom: 4 }}
                 variant={'contained'}
                 onClick={() => setIsCreateVisible(true)}
             >
@@ -143,13 +145,15 @@ const MatchFinder = () => {
                                                       {
                                                           border: 0,
                                                       },
-                                                  bgcolor: '#ff8',
+                                                  bgcolor: blue[900],
+                                                  height: 60,
                                               }
                                             : {
                                                   '&:last-child td, &:last-child th':
                                                       {
                                                           border: 0,
                                                       },
+                                                  height: 60,
                                               }
                                     }
                                 >
@@ -172,7 +176,7 @@ const MatchFinder = () => {
                                                     setIsConfirmVisible(true);
                                                 }}
                                             >
-                                                /
+                                                Accept
                                             </Button>
                                         )}
                                     </TableCell>
