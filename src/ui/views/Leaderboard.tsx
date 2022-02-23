@@ -12,6 +12,7 @@ import TableRow from '@mui/material/TableRow';
 import TablePagination from '@mui/material/TablePagination';
 import Paper from '@mui/material/Paper';
 import Typography from '@mui/material/Typography';
+import { blue } from '@mui/material/colors';
 
 // hooks
 import { useServices } from '../../api/services';
@@ -31,6 +32,14 @@ const createData = (
 
 const tableStyle = {
     header: { fontSize: 22 },
+    hoverCell: {
+        fontSize: 20,
+        '&:hover': {
+            cursor: 'pointer',
+            color: blue[200],
+        },
+        color: blue[500],
+    },
     cell: { fontSize: 18 },
     winCell: { fontSize: 18, color: 'lightGreen' },
     lossCell: { fontSize: 18, color: 'red' },
@@ -128,14 +137,14 @@ const Leaderboard = () => {
                                             border: 0,
                                         },
                                     }}
-                                    onClick={() => {
-                                        navigate(`/profile/${row.name}`);
-                                    }}
                                 >
                                     <TableCell
-                                        sx={tableStyle.cell}
+                                        sx={tableStyle.hoverCell}
                                         component="th"
                                         scope="row"
+                                        onClick={() => {
+                                            navigate(`/profile/${row.name}`);
+                                        }}
                                     >
                                         {row.name}
                                     </TableCell>

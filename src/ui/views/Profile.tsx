@@ -34,6 +34,18 @@ const createData = (
     isDisputed: boolean
 ) => ({ id, team0, team1, map, time, result, isDisputed });
 
+const tableStyle = {
+    bodyRow: {
+        '&:last-child td, &:last-child th': {
+            border: 0,
+        },
+        '&:hover': {
+            cursor: 'pointer',
+            backgroundColor: '#333',
+        },
+    },
+};
+
 const Profile = () => {
     // hooks
     const { getAccount, getMatchesByAccount } = useServices();
@@ -172,9 +184,9 @@ const Profile = () => {
                                 >
                                     <TableHead>
                                         <TableRow>
-                                            <TableCell>Team A</TableCell>
+                                            <TableCell>Player A</TableCell>
                                             <TableCell align="right">
-                                                Team B
+                                                Player B
                                             </TableCell>
                                             <TableCell align="right">
                                                 Maps
@@ -202,12 +214,7 @@ const Profile = () => {
                                             return (
                                                 <TableRow
                                                     key={row.id}
-                                                    sx={{
-                                                        '&:last-child td, &:last-child th':
-                                                            {
-                                                                border: 0,
-                                                            },
-                                                    }}
+                                                    sx={tableStyle.bodyRow}
                                                     onClick={() => {
                                                         navigate(
                                                             `/match/${row.id}`
