@@ -6,71 +6,52 @@ import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 import LoadingButton from '@mui/lab/LoadingButton';
 
+// hooks
+import { useServices } from '../../api/services';
+
 // models
-import { SignupCreds } from '../api/models';
+import { LoginCreds } from '../../api/models';
 
-// services
-import { useServices } from '../api/services';
-
+// local types
 interface Props {
-    setIsSignupVisible: Function;
+    setIsLoginVisible: Function;
 }
 
-const Signup = (props: Props) => {
-    const { signUp } = useServices();
+const Login = (props: Props) => {
+    // hooks
+    const { logIn } = useServices();
 
     // reactive
     const [isLoading, setIsLoading] = useState(false);
-    const [username, setUsername] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    const [confirmPassword, setConfirmPassword] = useState('');
 
     // methods
     const submit = async (e: FormEvent<HTMLFormElement>) => {
         setIsLoading(true);
         e.preventDefault();
 
-        if (password !== confirmPassword) {
-            console.log('passwords do not match');
-            setIsLoading(false);
-            return;
-        }
+        const loginCreds = {} as LoginCreds;
 
-        const signupCreds = {} as SignupCreds;
+        loginCreds.email = email;
+        loginCreds.password = password;
 
-        signupCreds.username = username;
-        signupCreds.email = email;
-        signupCreds.password = password;
-
-        await signUp(signupCreds);
+        await logIn(loginCreds);
 
         setIsLoading(false);
-        props.setIsSignupVisible(false);
+        props.setIsLoginVisible(false);
     };
 
     return (
         <div className="flex justify-center flex-col items-center">
             <div className="m-4">
-                <Typography variant="h2">Signup</Typography>
+                <Typography variant="h2">Login</Typography>
             </div>
             <form
                 className="w-full flex justify-center items-center flex-col"
                 noValidate
                 onSubmit={submit}
             >
-                <TextField
-                    className="w-80"
-                    id="username"
-                    name="username"
-                    type="username"
-                    label="Username"
-                    value={username}
-                    onChange={(e) => {
-                        setUsername(e.target.value);
-                    }}
-                    margin="normal"
-                />
                 <TextField
                     className="w-80"
                     id="email"
@@ -95,29 +76,17 @@ const Signup = (props: Props) => {
                     }}
                     margin="normal"
                 />
-                <TextField
-                    className="w-80"
-                    id="confirm password"
-                    name="confirm password"
-                    type="password"
-                    label="Confirm Password"
-                    value={confirmPassword}
-                    onChange={(e) => {
-                        setConfirmPassword(e.target.value);
-                    }}
-                    margin="normal"
-                />
                 <LoadingButton
                     type="submit"
                     variant="contained"
                     color="primary"
                     loading={isLoading}
                 >
-                    Signup
+                    Login
                 </LoadingButton>
             </form>
         </div>
     );
 };
 
-export default Signup;
+export default Login;

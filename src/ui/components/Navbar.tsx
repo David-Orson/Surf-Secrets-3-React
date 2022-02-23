@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 
 // mui
+import Container from '@mui/material/Container';
 import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
 import Button from '@mui/material/Button';
@@ -10,7 +11,7 @@ import Modal from '@mui/material/Modal';
 import Box from '@mui/material/Box';
 
 // hooks
-import { useActions } from '../redux/actions';
+import { useActions } from '../../redux/actions';
 
 // components
 import Login from './Login';
@@ -27,31 +28,33 @@ const Navbar = () => {
     return (
         <div>
             <AppBar>
-                <Toolbar>
-                    {!isAuthenticated() ? (
-                        <div>
-                            <Button
-                                color="inherit"
-                                onClick={() => setIsLoginVisible(true)}
-                            >
-                                Login
+                {!isAuthenticated() ? (
+                    <Toolbar>
+                        <Container sx={{ flexGrow: 1 }}>
+                            <Button color="inherit" component={Link} to="/">
+                                Leaderboard
                             </Button>
-                            <Button
-                                color="inherit"
-                                onClick={() => setIsSignupVisible(true)}
-                            >
-                                Signup
+                        </Container>
+                        <Button
+                            color="inherit"
+                            onClick={() => setIsLoginVisible(true)}
+                        >
+                            Login
+                        </Button>
+                        <Button
+                            color="inherit"
+                            onClick={() => setIsSignupVisible(true)}
+                        >
+                            Signup
+                        </Button>
+                    </Toolbar>
+                ) : (
+                    <Toolbar>
+                        <Container sx={{ flexGrow: 1 }}>
+                            <Button color="inherit" component={Link} to="/">
+                                Leaderboard
                             </Button>
-                        </div>
-                    ) : (
-                        <div>
-                            <Button
-                                color="inherit"
-                                component={Link}
-                                to="/profile"
-                            >
-                                Profile
-                            </Button>
+
                             <Button
                                 color="inherit"
                                 component={Link}
@@ -59,13 +62,12 @@ const Navbar = () => {
                             >
                                 Match Finder
                             </Button>
-                        </div>
-                    )}
-
-                    <Button color="inherit" component={Link} to="/">
-                        Home
-                    </Button>
-                </Toolbar>
+                        </Container>
+                        <Button color="inherit" component={Link} to="/profile">
+                            Profile
+                        </Button>
+                    </Toolbar>
+                )}
             </AppBar>
             <Modal
                 open={isLoginVisible}

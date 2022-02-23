@@ -2,18 +2,27 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 
+// mui
+import { createTheme, ThemeProvider } from '@mui/material/styles';
+
 // components
-import Navbar from './components/Navbar';
+import Navbar from './ui/components/Navbar';
 
 // views
-import Leaderboard from './views/Leaderboard';
-import Profile from './views/Profile';
-import MatchFinder from './views/MatchFinder';
-import MatchOverview from './views/MatchOverview';
+import Leaderboard from './ui/views/Leaderboard';
+import Profile from './ui/views/Profile';
+import MatchFinder from './ui/views/MatchFinder';
+import MatchOverview from './ui/views/MatchOverview';
+
+const theme = createTheme({
+    palette: {
+        mode: 'dark',
+    },
+});
 
 const App = () => {
     return (
-        <div className="App">
+        <ThemeProvider theme={theme}>
             <Router>
                 <Navbar />
                 <div className="router-view">
@@ -29,7 +38,7 @@ const App = () => {
                     </Routes>
                 </div>
             </Router>
-        </div>
+        </ThemeProvider>
     );
 };
 

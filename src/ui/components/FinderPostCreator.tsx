@@ -25,12 +25,12 @@ import TimePicker from '@mui/lab/TimePicker';
 import TextField from '@mui/material/TextField';
 
 // hooks
-import { useServices } from '../api/services';
-import { useActions } from '../redux/actions';
+import { useServices } from '../../api/services';
+import { useActions } from '../../redux/actions';
 
 // models
-import { FinderPost, SurfMap } from '../api/models';
-import { RootState } from '../redux/store';
+import { FinderPost, SurfMap } from '../../api/models';
+import { RootState } from '../../redux/store';
 
 function CustomSelect<TValue extends {}>(props: SelectUnstyledProps<TValue>) {
     const components: SelectUnstyledProps<TValue>['components'] = {

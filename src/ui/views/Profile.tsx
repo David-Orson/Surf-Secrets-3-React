@@ -17,11 +17,11 @@ import TableRow from '@mui/material/TableRow';
 import TablePagination from '@mui/material/TablePagination';
 
 // hooks
-import { useServices } from '../api/services';
+import { useServices } from '../../api/services';
 
 // models
-import { Account, SurfMap } from '../api/models';
-import { RootState } from '../redux/store';
+import { Account, SurfMap } from '../../api/models';
+import { RootState } from '../../redux/store';
 
 const createData = (
     id: number,

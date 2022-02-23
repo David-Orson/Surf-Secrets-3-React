@@ -9,9 +9,7 @@ import './index.css';
 ReactDOM.render(
     <React.StrictMode>
         <Redux store={store}>
-            <div className="bg-slate-900 h-full w-full">
-                <App />
-            </div>
+            <App />
         </Redux>
     </React.StrictMode>,
     document.getElementById('root')

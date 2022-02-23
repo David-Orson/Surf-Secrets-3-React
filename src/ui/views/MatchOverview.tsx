@@ -12,11 +12,11 @@ import Modal from '@mui/material/Modal';
 import Box from '@mui/material/Box';
 
 // hooks
-import { useServices } from '../api/services';
+import { useServices } from '../../api/services';
 
 // models
-import { Match } from '../api/models';
-import { RootState } from '../redux/store';
+import { Match } from '../../api/models';
+import { RootState } from '../../redux/store';
 
 // components
 import ReportMatch from '../components/ReportMatch';

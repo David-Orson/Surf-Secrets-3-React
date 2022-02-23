@@ -18,11 +18,11 @@ import Modal from '@mui/material/Modal';
 import Box from '@mui/material/Box';
 
 // hooks
-import { useServices } from '../api/services';
+import { useServices } from '../../api/services';
 
 // models
-import { FinderPost } from '../api/models';
-import { RootState } from '../redux/store';
+import { FinderPost } from '../../api/models';
+import { RootState } from '../../redux/store';
 
 // componenets
 import FinderPostCreator from '../components/FinderPostCreator';

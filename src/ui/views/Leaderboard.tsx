@@ -13,10 +13,10 @@ import TablePagination from '@mui/material/TablePagination';
 import Paper from '@mui/material/Paper';
 
 // hooks
-import { useServices } from '../api/services';
+import { useServices } from '../../api/services';
 
 // models
-import { Account } from '../api/models';
+import { Account } from '../../api/models';
 
 const createData = (
     name: string,
