@@ -25,14 +25,83 @@ const Signup = (props: Props) => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
+    const [errors, setErrors] = useState({
+        error: false,
+        username: { value: false, text: '' },
+        email: { value: false, text: '' },
+        password: { value: false, text: '' },
+        confirm: { value: false, text: '' },
+    });
+
+    // props
+    let tempErrors = {
+        error: false,
+        username: { value: false, text: '' },
+        email: { value: false, text: '' },
+        password: { value: false, text: '' },
+        confirm: { value: false, text: '' },
+    };
 
     // methods
     const submit = async (e: FormEvent<HTMLFormElement>) => {
         setIsLoading(true);
         e.preventDefault();
 
+        if (
+            !String(username)
+                .toLowerCase()
+                .match(/^.{3,50}$/)
+        ) {
+            tempErrors = {
+                ...tempErrors,
+                error: true,
+                username: {
+                    value: true,
+                    text: 'Username must be at least 3 characters',
+                },
+            };
+        }
+
+        if (
+            !String(email)
+                .toLowerCase()
+                .match(
+                    /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+                )
+        ) {
+            tempErrors = {
+                ...tempErrors,
+                error: true,
+                email: { value: true, text: 'Valid email required' },
+            };
+        }
+
+        if (
+            !String(password).match(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,20}$/)
+        ) {
+            tempErrors = {
+                ...tempErrors,
+                error: true,
+                password: {
+                    value: true,
+                    text: 'Password must be 6-20 characters, must have 1 uppercase letter and 1 number',
+                },
+            };
+        }
+
         if (password !== confirmPassword) {
-            console.log('passwords do not match');
+            tempErrors = {
+                ...tempErrors,
+                error: true,
+                confirm: {
+                    value: true,
+                    text: 'Passwords must match',
+                },
+            };
+        }
+
+        if (tempErrors.error) {
+            setErrors(tempErrors);
             setIsLoading(false);
             return;
         }
@@ -68,6 +137,8 @@ const Signup = (props: Props) => {
                     type="username"
                     label="Username"
                     value={username}
+                    error={errors.username.value}
+                    helperText={errors.username.text}
                     onChange={(e) => {
                         setUsername(e.target.value);
                     }}
@@ -81,6 +152,8 @@ const Signup = (props: Props) => {
                     type="email"
                     label="Email"
                     value={email}
+                    error={errors.email.value}
+                    helperText={errors.email.text}
                     onChange={(e) => {
                         setEmail(e.target.value);
                     }}
@@ -94,6 +167,8 @@ const Signup = (props: Props) => {
                     type="password"
                     label="Password"
                     value={password}
+                    error={errors.password.value}
+                    helperText={errors.password.text}
                     onChange={(e) => {
                         setPassword(e.target.value);
                     }}
@@ -107,6 +182,8 @@ const Signup = (props: Props) => {
                     type="password"
                     label="Confirm Password"
                     value={confirmPassword}
+                    error={errors.confirm.value}
+                    helperText={errors.confirm.text}
                     onChange={(e) => {
                         setConfirmPassword(e.target.value);
                     }}
