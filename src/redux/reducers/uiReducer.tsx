@@ -5,7 +5,11 @@ import { OPEN_TOAST, CLOSE_TOAST } from '../types';
 import { UI } from '../../api/models';
 
 const initialState: UI = {
-    isToastOpen: false,
+    toast: {
+        isOpen: false,
+        severity: undefined,
+        messages: [''],
+    },
 } as UI;
 
 const uiReducer: any = (state = initialState, action: any) => {
@@ -13,11 +17,10 @@ const uiReducer: any = (state = initialState, action: any) => {
         case OPEN_TOAST:
             return {
                 ...state,
-                isToastOpen: true,
+                toast: { isOpen: true, ...action.payload },
             };
-
         case CLOSE_TOAST:
-            return initialState;
+            return { toast: { ...state.toast, isOpen: false } };
         default:
             return state;
     }

@@ -18,19 +18,28 @@ const Toast = () => {
     const { closeToast } = useActions();
 
     // reactive
-    const ui = useSelector((state: RootState) => state.ui);
+    const toast = useSelector((state: RootState) => state.ui.toast);
 
     return (
         <Snackbar
-            open={ui.isToastOpen}
+            open={toast.isOpen}
             anchorOrigin={{
                 vertical: 'bottom',
                 horizontal: 'right',
             }}
+            autoHideDuration={6000}
+            onClose={() => closeToast()}
         >
-            <Alert onClose={() => closeToast()} severity="error">
-                <AlertTitle>Error</AlertTitle>
-                This is an error alert — check it out!
+            <Alert onClose={() => closeToast()} severity={toast.severity}>
+                <AlertTitle>
+                    {toast.severity
+                        ? toast.severity.charAt(0).toUpperCase() +
+                          toast.severity.slice(1)
+                        : null}
+                </AlertTitle>
+                {toast.messages.map((message: string) => {
+                    return <div>{message}</div>;
+                })}
             </Alert>
         </Snackbar>
     );

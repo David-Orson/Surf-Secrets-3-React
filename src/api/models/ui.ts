@@ -1,3 +1,7 @@
 export interface UI {
-    isToastOpen: boolean;
+    toast: {
+        isOpen: boolean;
+        severity: 'success' | 'info' | 'warning' | 'error' | undefined;
+        messages: string[];
+    };
 }

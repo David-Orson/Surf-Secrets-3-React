@@ -5,9 +5,11 @@ import { useDispatch } from 'react-redux';
 export const useUIActions = () => {
     const dispatch = useDispatch();
 
-    const openToast = () => {
+    const openToast = (severity: string, ...messages: string[]) => {
+        let m = [...messages];
         dispatch({
             type: OPEN_TOAST,
+            payload: { severity, messages: m[0] },
         });
     };
 

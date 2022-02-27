@@ -27,7 +27,7 @@ const initialState: InitialState = {
             token: localStorage.getItem('authToken'),
         },
     } as Network,
-    ui: { isToastOpen: false } as UI,
+    ui: { toast: { isOpen: false, severity: undefined, messages: [''] } } as UI,
 };
 
 console.log(!!initialState.account, initialState.account);

@@ -2,11 +2,17 @@
 import axios, { AxiosError } from 'axios';
 import { useSelector } from 'react-redux';
 
+// hooks
+import { useActions } from '../redux/actions';
+
 // models
 import { Request, AxiosRequest } from '../api/models';
 import { RootState } from '../redux/store';
 
 export const useAxios = () => {
+    // hooks
+    const { openToast } = useActions();
+
     const authToken = useSelector(
         (state: RootState) => state.network.auth.token
     );
@@ -64,13 +70,37 @@ export const useAxios = () => {
 
     const handleError = (err: AxiosError, requestId: number) => {
         requests.find((x) => x.id === requestId).complete = true;
-        window.console.error(err);
+        requests.find((x) => x.id === requestId).status = err.response?.status;
+
+        if (err.response && err.response.status === 401) {
+            openToast('error', 'Please log out and then log in');
+            return;
+        }
+
+        if (err.response && err.response.status === 504) {
+            openToast(
+                'error',
+                'There is currently a server issue, if the problem persists please get in touch with Orson'
+            );
+            throw err;
+        }
+
+        if (err.response && err.response.data.message) {
+            openToast('error', err.response.data.message);
+        } else if (err.response && err.response.data.errors) {
+            console.log(err.response.data);
+            openToast('error', err.response.data.errors);
+        } else {
+            openToast('error', 'Validation error:\n' + JSON.stringify(err));
+        }
+        throw err;
     };
 
     const setDelayWarning = (delay?: number) => {
         if (!delay) return;
 
         setTimeout(() => {
+            openToast('error', 'request is taking longer than expected');
             window.console.warn('request is taking longer than expected');
         }, delay);
     };
