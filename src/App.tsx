@@ -9,6 +9,7 @@ import { blue } from '@mui/material/colors';
 
 // components
 import Navbar from './ui/components/Navbar';
+import Toast from './ui/components/Toast';
 
 // views
 import Leaderboard from './ui/views/Leaderboard';
@@ -47,6 +48,7 @@ const App = () => {
                             />
                         </Routes>
                     </Container>
+                    <Toast />
                 </Router>
             </div>
         </ThemeProvider>

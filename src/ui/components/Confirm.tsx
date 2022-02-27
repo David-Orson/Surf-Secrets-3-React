@@ -1,5 +1,5 @@
 // npm
-import React, { ReactNode, forwardRef } from 'react';
+import React, { ReactNode } from 'react';
 
 // mui
 import LoadingButton from '@mui/lab/LoadingButton';
@@ -15,7 +15,7 @@ interface Props {
     children?: ReactNode;
 }
 
-const Confirm = forwardRef<HTMLUListElement, Props>((props: Props, ref) => {
+const Confirm = (props: Props) => {
     return (
         <div className="bg-stone-900 flex justify-center flex-col items-center p-6">
             <Typography color="white">
@@ -46,6 +46,6 @@ const Confirm = forwardRef<HTMLUListElement, Props>((props: Props, ref) => {
             </div>
         </div>
     );
-});
+};
 
 export default Confirm;

@@ -8,13 +8,15 @@ import thunk from 'redux-thunk';
 // reducers
 import accountReducer from './reducers/accountReducer';
 import networkReducer from './reducers/networkReducer';
+import uiReducer from './reducers/uiReducer';
 
 // models
-import { Account, Network } from '../api/models';
+import { Account, Network, UI } from '../api/models';
 
 export interface InitialState {
     account: Account;
     network: Network;
+    ui: UI;
 }
 
 const initialState: InitialState = {
@@ -25,6 +27,7 @@ const initialState: InitialState = {
             token: localStorage.getItem('authToken'),
         },
     } as Network,
+    ui: { isToastOpen: false } as UI,
 };
 
 console.log(!!initialState.account, initialState.account);
@@ -34,11 +37,13 @@ const middleware = [thunk];
 const reducers = combineReducers({
     network: networkReducer,
     account: accountReducer,
+    ui: uiReducer,
 });
 
 export type RootState = {} & {
     network: Network;
     account: Account;
+    ui: UI;
 };
 
 const store = createStore(
