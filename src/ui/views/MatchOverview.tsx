@@ -136,6 +136,11 @@ const MatchOverview = () => {
                                 </Button>
                             </Container>
                         ) : null}
+                        <div className="p-4 text-red-500">
+                            {match.isDisputed
+                                ? 'The players of this match have not agreed on the outcome so the result is currently disputed, please contact Orson on discord'
+                                : null}
+                        </div>
                     </div>
                 ) : (
                     <div>No Match</div>
@@ -152,7 +157,7 @@ const MatchOverview = () => {
                 >
                     <ReportMatch
                         setIsReportVisible={setIsReportVisible}
-                        matchId={match.id}
+                        match={match}
                     />
                 </Box>
             </Modal>

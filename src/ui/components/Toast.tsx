@@ -37,8 +37,8 @@ const Toast = () => {
                           toast.severity.slice(1)
                         : null}
                 </AlertTitle>
-                {toast.messages.map((message: string) => {
-                    return <div>{message}</div>;
+                {toast.messages.map((message: string, i) => {
+                    return <div key={i}>{message}</div>;
                 })}
             </Alert>
         </Snackbar>

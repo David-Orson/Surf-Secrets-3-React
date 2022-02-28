@@ -88,7 +88,6 @@ export const useAxios = () => {
         if (err.response && err.response.data.message) {
             openToast('error', err.response.data.message);
         } else if (err.response && err.response.data.errors) {
-            console.log(err.response.data);
             openToast('error', err.response.data.errors);
         } else {
             openToast('error', 'Validation error:\n' + JSON.stringify(err));
@@ -116,7 +115,6 @@ export const useAxios = () => {
 
             setDelayWarning(delay);
 
-            console.log('config', request.axiosRequestConfig);
             return reqMethod(url, body, request.axiosRequestConfig).catch(
                 (err: AxiosError) => {
                     handleError(err, request?.id);

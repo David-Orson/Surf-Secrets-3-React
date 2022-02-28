@@ -256,10 +256,13 @@ const Profile = () => {
                                                     >
                                                         {row.result}
                                                     </TableCell>
-                                                    <TableCell align="right">
+                                                    <TableCell
+                                                        sx={{ color: 'red' }}
+                                                        align="right"
+                                                    >
                                                         {row.isDisputed
-                                                            ? 'Yes'
-                                                            : 'No'}
+                                                            ? 'Disputed'
+                                                            : null}
                                                     </TableCell>
                                                 </TableRow>
                                             );

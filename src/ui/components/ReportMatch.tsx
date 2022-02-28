@@ -13,10 +13,13 @@ import LoadingButton from '@mui/lab/LoadingButton';
 // hooks
 import { useServices } from '../../api/services';
 
+// models
+import { Match } from '../../api/models';
+
 // local types
 interface Props {
     setIsReportVisible: Function;
-    matchId: number;
+    match: Match;
 }
 
 const ReportMatch = (props: Props) => {
@@ -33,7 +36,7 @@ const ReportMatch = (props: Props) => {
     const report = async () => {
         setIsLoading(true);
 
-        await reportMatch(props.matchId, [scoreA, scoreB]);
+        await reportMatch(props.match.id, [scoreA, scoreB]);
 
         setIsLoading(false);
         props.setIsReportVisible(false);
@@ -45,7 +48,9 @@ const ReportMatch = (props: Props) => {
         <div className="bg-stone-900 flex justify-center items-center p-8">
             <Box sx={{ minWidth: 120 }}>
                 <FormControl fullWidth>
-                    <InputLabel id="select-label-a">Team A</InputLabel>
+                    <InputLabel id="select-label-a">
+                        {props.match.team0Names[0]}
+                    </InputLabel>
                     <Select
                         labelId="select-label-a"
                         id="select-a"
@@ -61,7 +66,9 @@ const ReportMatch = (props: Props) => {
                     <div className="m-2"></div>
                 </FormControl>
                 <FormControl fullWidth>
-                    <InputLabel id="select-label-b">Team B</InputLabel>
+                    <InputLabel id="select-label-b">
+                        {props.match.team1Names[0]}
+                    </InputLabel>
                     <Select
                         labelId="select-label-b"
                         id="select-b"

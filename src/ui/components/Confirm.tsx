@@ -21,9 +21,7 @@ const Confirm = (props: Props) => {
             <Typography color="white">
                 Are you sure you would like to {props.action} ?
             </Typography>
-            <Typography sx={{ marginTop: 2, marginBottom: 2 }} color="white">
-                {props.children}
-            </Typography>
+            {props.children}
 
             <div className="flex justify-center mx-4 items-center">
                 <LoadingButton

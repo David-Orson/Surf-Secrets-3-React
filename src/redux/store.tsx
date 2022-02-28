@@ -30,8 +30,6 @@ const initialState: InitialState = {
     ui: { toast: { isOpen: false, severity: undefined, messages: [''] } } as UI,
 };
 
-console.log(!!initialState.account, initialState.account);
-
 const middleware = [thunk];
 
 const reducers = combineReducers({
