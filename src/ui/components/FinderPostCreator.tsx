@@ -9,20 +9,19 @@ import LocalizationProvider from '@mui/lab/LocalizationProvider';
 
 import Typography from '@mui/material/Typography';
 import LoadingButton from '@mui/lab/LoadingButton';
-
 import OptionUnstyled, {
     optionUnstyledClasses,
 } from '@mui/base/OptionUnstyled';
 import PopperUnstyled from '@mui/base/PopperUnstyled';
-
 import SelectUnstyled, {
     SelectUnstyledProps,
     selectUnstyledClasses,
 } from '@mui/base/SelectUnstyled';
 import { styled } from '@mui/system';
-
-import TimePicker from '@mui/lab/TimePicker';
+import StaticTimePicker from '@mui/lab/StaticTimePicker';
 import TextField from '@mui/material/TextField';
+import FormControl from '@mui/material/FormControl';
+import InputLabel from '@mui/material/InputLabel';
 
 // hooks
 import { useServices } from '../../api/services';
@@ -185,8 +184,20 @@ const FinderPostCreator = (props: Props) => {
     // reactive
     const [isLoading, setIsLoading] = useState(false);
     const [maps, setMaps] = useState<SurfMap[]>([]);
-    const [map, setMap] = useState<SurfMap | null>({} as SurfMap);
-    const [time, setTime] = useState<Date | null>(new Date());
+    const [map, setMap] = useState<SurfMap | null>(null);
+    const [time, setTime] = useState<Date | null>(null);
+    const [errors, setErrors] = useState({
+        error: false,
+        map: { value: false, text: '' },
+        time: { value: false, text: '' },
+    });
+
+    // props
+    let tempErrors = {
+        error: false,
+        map: { value: false, text: '' },
+        time: { value: false, text: '' },
+    };
 
     const account = useSelector((state: RootState) => state.account);
 
@@ -194,6 +205,39 @@ const FinderPostCreator = (props: Props) => {
     const submit = async (e: FormEvent<HTMLFormElement>) => {
         setIsLoading(true);
         e.preventDefault();
+
+        if (!map) {
+            tempErrors = {
+                ...tempErrors,
+                error: true,
+                map: { value: true, text: 'Map selection required' },
+            };
+        }
+
+        if (!time) {
+            tempErrors = {
+                ...tempErrors,
+                error: true,
+                time: { value: true, text: 'Scheduled time required' },
+            };
+        }
+
+        if (time && time <= new Date()) {
+            tempErrors = {
+                ...tempErrors,
+                error: true,
+                time: {
+                    value: true,
+                    text: 'Scheduled time must be in the future',
+                },
+            };
+        }
+
+        if (tempErrors.error) {
+            setErrors(tempErrors);
+            setIsLoading(false);
+            return;
+        }
 
         const finderPost = {} as FinderPost;
 
@@ -239,20 +283,43 @@ const FinderPostCreator = (props: Props) => {
                 noValidate
                 onSubmit={submit}
             >
-                <CustomSelect value={map} onChange={setMap}>
-                    {maps.map((map) => (
-                        <StyledOption key={map.id} value={map}>
-                            {map.name}
-                        </StyledOption>
-                    ))}
-                </CustomSelect>
+                <FormControl
+                    required={!map}
+                    error={errors.map.value}
+                    sx={{ m: 1, minWidth: 120 }}
+                >
+                    <InputLabel id="demo-simple-select-required-label">
+                        {map
+                            ? null
+                            : errors.map.value
+                            ? errors.map.text
+                            : 'Map'}
+                    </InputLabel>
+                    <CustomSelect value={map} onChange={setMap}>
+                        {maps.map((map) => (
+                            <StyledOption key={map.id} value={map}>
+                                {map.name}
+                            </StyledOption>
+                        ))}
+                    </CustomSelect>
+                </FormControl>
+
                 <div className="h-6"></div>
                 <LocalizationProvider dateAdapter={DateAdapter}>
-                    <TimePicker
+                    <StaticTimePicker
+                        displayStaticWrapperAs="mobile"
                         value={time}
                         onChange={(newTime) => setTime(newTime)}
                         renderInput={(params: any) => <TextField {...params} />}
+                        minutesStep={15}
                     />
+
+                    <InputLabel
+                        id="demo-simple-select-required-label"
+                        error={errors.time.value}
+                    >
+                        {errors.time.text}
+                    </InputLabel>
                 </LocalizationProvider>
 
                 <LoadingButton
