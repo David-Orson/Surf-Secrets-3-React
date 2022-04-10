@@ -1,15 +1,29 @@
-FROM node:16.14.2-alpine
+FROM node:16.14.2-alpine AS build
 
-RUN apk update && apk add bash
+WORKDIR /usr/app
+RUN apk add --no-cache git
 
-WORKDIR /app
-
-COPY package.json .
+COPY package.json ./
 RUN npm install
 
 COPY . .
+RUN npm run build
 
-CMD ["npm","start"]
+FROM httpd:alpine
+EXPOSE 80
 
-# run locally with 
-# docker run --rm -it -p 3000:3000 -d surf-battles-react
+FROM httpd:alpine
+EXPOSE 80
+RUN echo -e "<IfModule mod_rewrite.c>\n \
+  RewriteEngine On\n \
+  RewriteBase /\n \
+  RewriteRule ^index\.html$ - [L]\n \
+  RewriteCond %{REQUEST_FILENAME} !-f\n \
+  RewriteCond %{REQUEST_FILENAME} !-d\n \
+  RewriteRule . /index.html [L]\n \
+</IfModule>" > /usr/local/apache2/htdocs/.htaccess
+RUN sed -i 's/#LoadModule rewrite_module modules\/mod_rewrite.so/LoadModule rewrite_module modules\/mod_rewrite.so/g' /usr/local/apache2/conf/httpd.conf
+RUN sed -i 's/AllowOverride None/AllowOverride All/g' /usr/local/apache2/conf/httpd.conf
+
+COPY --from=build /usr/app/build /usr/local/apache2/htdocs/
+ 
